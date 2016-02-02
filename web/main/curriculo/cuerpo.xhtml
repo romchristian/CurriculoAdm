@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <div class="Container100 Responsive100" >
+        <div class="ContainerIndent">
+            <div class="Card ShadowEffect HeiAutoOnMobile">
+                <h2 class="CardTopic"><i class="fa fa-plus-square Fs25 Fleft MarRight10 "></i>#{titulo}</h2>
+                <div class="Separator"/>
+                <h:form>
+
+                    <p:outputPanel id="panel">
+                        <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
+                            <p:outputLabel value="Nombre y Apellido" for="nombre" />
+                            <h:outputText value="#{curriculoBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
+                            <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                            <p:message for="nombre"/>
+                            
+                            <p:outputLabel value="Tipo Documento" for="tipoDocumento" />
+                            <h:outputText value="#{curriculoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}"/>
+                            <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
+                                <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:message for="tipoDocumento"/>
+                            
+                            <p:outputLabel value="Documento" for="documento" />
+                            <h:outputText value="#{curriculoBean.actual.documento}" rendered="#{(contexto == 'vista')}"/>
+                            <p:inputText value="#{curriculoBean.actual.documento}" required="true" id="documento" rendered="#{not(contexto == 'vista')}"/>
+                            <p:message for="documento"/>
+                            
+                        </h:panelGrid>  
+                    </p:outputPanel>
+
+                    <br/>
+
+
+                    <p:commandButton value="Crear" action="#{curriculoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
+                    <p:commandButton value="Guardar" action="#{curriculoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
+                    
+                    <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
+                        <f:param name="id" value="#{curriculoBean.actual.id}"/>
+                    </p:button>
+                    
+
+                </h:form>
+
+            </div>
+        </div>
+    </div>
+</ui:composition>
+
