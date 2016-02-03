@@ -19,7 +19,7 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class TipoDocumento implements Serializable , Auditable{
+public class TipoDocumento implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,7 +75,7 @@ public class TipoDocumento implements Serializable , Auditable{
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.TipoDocumento[ id=" + id + " ]";
+        return nombre;
     }
 
 }

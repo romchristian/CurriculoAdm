@@ -22,7 +22,7 @@ import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEstadoNivelAcademicoD
  */
 @Named
 @ViewScoped
-public class EstadoNivelAcademidoBean extends BeanGenerico<EstadoNivelAcademico> implements Serializable{
+public class EstadoNivelAcademicoBean extends BeanGenerico<EstadoNivelAcademico> implements Serializable{
 
     @EJB private IEstadoNivelAcademicoDAO ejb;
     

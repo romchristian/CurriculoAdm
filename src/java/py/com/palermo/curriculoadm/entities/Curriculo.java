@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import org.hibernate.validator.constraints.Email;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -43,7 +44,11 @@ public class Curriculo implements Serializable, Auditable {
     private Integer cantidadHijos;
     private String direccion;
     private String telefonos;
+    @Email
     private String email;
+    private String directoryUUID;
+    @Enumerated(EnumType.STRING)
+    private Sexo sexo;
 
     @ManyToOne
     private Area area;
@@ -58,7 +63,7 @@ public class Curriculo implements Serializable, Auditable {
     private List<ReferenciaLaboral> referenciasLaborales;
 
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReferenciaPersonal> refereciasPersonales;
+    private List<ReferenciaPersonal> referenciasPersonales;
 
     @Enumerated(EnumType.STRING)
     private EstadoCurriculo estadoCurriculo;
@@ -91,6 +96,14 @@ public class Curriculo implements Serializable, Auditable {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
     }
 
     public String getDocumento() {
@@ -197,12 +210,12 @@ public class Curriculo implements Serializable, Auditable {
         this.referenciasLaborales = referenciasLaborales;
     }
 
-    public List<ReferenciaPersonal> getRefereciasPersonales() {
-        return refereciasPersonales;
+    public List<ReferenciaPersonal> getReferenciasPersonales() {
+        return referenciasPersonales;
     }
 
-    public void setRefereciasPersonales(List<ReferenciaPersonal> refereciasPersonales) {
-        this.refereciasPersonales = refereciasPersonales;
+    public void setReferenciasPersonales(List<ReferenciaPersonal> refereciasPersonales) {
+        this.referenciasPersonales = refereciasPersonales;
     }
 
     public EstadoCurriculo getEstadoCurriculo() {
@@ -235,6 +248,18 @@ public class Curriculo implements Serializable, Auditable {
 
     public void setAdjunto(String adjunto) {
         this.adjunto = adjunto;
+    }
+
+    public String getDirectoryUUID() {
+        return directoryUUID;
+    }
+
+    public void setDirectoryUUID(String directoryUUID) {
+        this.directoryUUID = directoryUUID;
+    }
+
+    public String getNombreAdjunto() {
+        return directoryUUID + adjunto;
     }
 
     @Override

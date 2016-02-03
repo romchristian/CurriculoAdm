@@ -106,7 +106,7 @@ public class Usuario implements Serializable, Auditable {
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.Usuario[ id=" + id + " ]";
+        return nombres;
     }
 
 }

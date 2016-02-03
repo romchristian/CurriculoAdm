@@ -75,7 +75,7 @@ public class EstadoCivil implements Serializable , Auditable{
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.EstadoCivil[ id=" + id + " ]";
+        return nombre;
     }
 
 }

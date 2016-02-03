@@ -4,13 +4,27 @@
  */
 package py.com.palermo.curriculoadm.web;
 
-import com.sun.org.apache.bcel.internal.generic.Select;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import javax.ejb.EJB;
+
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
+
 import javax.inject.Named;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import py.com.palermo.curriculoadm.entities.Curriculo;
+import py.com.palermo.curriculoadm.entities.ReferenciaLaboral;
+import py.com.palermo.curriculoadm.entities.ReferenciaPersonal;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
 import py.com.palermo.curriculoadm.generico.BeanGenerico;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
@@ -28,6 +42,33 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     private String diaNac;
     private String mesNac;
     private String anioNac;
+    private UploadedFile file;
+
+    @Override
+    public Curriculo getActual() {
+        Curriculo R = super.getActual();
+        if(R.getId() == null || R.getId() == 0){
+            
+            
+            List<ReferenciaLaboral> refsLaboral = new ArrayList<>();
+            refsLaboral.add(new ReferenciaLaboral());
+            refsLaboral.add(new ReferenciaLaboral());
+            
+            getActual().setReferenciasLaborales(refsLaboral);
+            
+            
+            List<ReferenciaPersonal> refsPersonales = new ArrayList<>();
+            refsPersonales.add(new ReferenciaPersonal());
+            refsPersonales.add(new ReferenciaPersonal());
+            
+            getActual().setReferenciasPersonales(refsPersonales);
+        }
+        
+        return R;
+    }
+    
+    
+    
 
     @Override
     public AbstractDAO<Curriculo> getEjb() {
@@ -63,6 +104,14 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         this.anioNac = anioNac;
     }
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public SelectItem[] getSelectItemsDias() {
         SelectItem[] items = new SelectItem[32];
         items[0] = new SelectItem("", "--");
@@ -75,8 +124,8 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     public SelectItem[] getSelectItemsAnios() {
         SelectItem[] items = new SelectItem[41];
         items[0] = new SelectItem("", "--");
-        for (int i = 1960; i < 2000; i++) {
-            items[i] = new SelectItem("" + i, "" + i);
+        for (int i = 1; i < 41; i++) {
+            items[i] = new SelectItem("" + (i + 1959), "" + (i + 1959));
         }
         return items;
     }
@@ -100,4 +149,54 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         return items;
     }
 
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        if (event.getFile() != null) {
+
+            file = event.getFile();
+            getActual().setAdjunto(file.getFileName());
+            System.out.println("FILE: " + file);
+        }
+    }
+
+    public void copyFile() {
+        try {
+
+            System.out.println("FILE en COPY: " + file);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            String destination = fc.getExternalContext().getInitParameter("uploadDirectory");
+           
+            final String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            destination += uuid;
+            
+            OutputStream out = new FileOutputStream(new File(destination + file.getFileName() + "." + (file.getFileName().split("\\."))[1]));
+
+            System.out.println("DIR:  " + destination);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            InputStream in = file.getInputstream();
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            
+            System.out.println("New file created!");
+            
+            
+            getActual().setDirectoryUUID(uuid);
+            
+        } catch (IOException e) {
+            getActual().setAdjunto(null);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void guardar() {
+        copyFile();
+        edit();
+    }
 }

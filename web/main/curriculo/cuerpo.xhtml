@@ -7,50 +7,200 @@
 
 
 
-    <div class="Container100 Responsive100" >
-        <div class="ContainerIndent">
-            <div class="Card ShadowEffect HeiAutoOnMobile">
-                <h2 class="CardTopic"><i class="fa fa-plus-square Fs25 Fleft MarRight10 "></i>#{titulo}</h2>
-                <div class="Separator"/>
-                <h:form>
+    <div class="Container100">
+        <div class="Card">
 
-                    <p:outputPanel id="panel">
-                        <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
-                            <p:outputLabel value="Nombre y Apellido" for="nombre" />
-                            <h:outputText value="#{curriculoBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
-                            <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
-                            <p:message for="nombre"/>
-                            
-                            <p:outputLabel value="Tipo Documento" for="tipoDocumento" />
-                            <h:outputText value="#{curriculoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
-                                <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>
-                            <p:message for="tipoDocumento"/>
-                            
-                            <p:outputLabel value="Documento" for="documento" />
-                            <h:outputText value="#{curriculoBean.actual.documento}" rendered="#{(contexto == 'vista')}"/>
-                            <p:inputText value="#{curriculoBean.actual.documento}" required="true" id="documento" rendered="#{not(contexto == 'vista')}"/>
-                            <p:message for="documento"/>
-                            
-                        </h:panelGrid>  
+            <h:form>
+
+
+                <div class="FontVoltRegular Blue Fs26">
+                    <span>Datos Personales</span>
+                </div>
+
+                <div class="Separator"></div>
+                <div class="EmptyBox20"></div>
+
+                <p:outputPanel id="panel">
+                    <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
+                        <p:outputLabel value="Nombre y Apellido" for="nombre" />
+                        <h:outputText value="#{curriculoBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="nombre"/>
+                        
+                        
+                        <p:outputLabel value="E-mail" for="email" />
+                        <h:outputText value="#{curriculoBean.actual.email}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.email}" required="true" id="email" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="email"/>
+                        
+                        <p:outputLabel value="Dirección" for="direccion" />
+                        <h:outputText value="#{curriculoBean.actual.direccion}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.direccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="direccion"/>
+                        
+                        <p:outputLabel value="Tiene Hijos" for="tieneHijos" />
+                        <h:outputText value="#{curriculoBean.actual.tieneHijos == true?'SI': 'NO'}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectBooleanButton value="#{curriculoBean.actual.tieneHijos}" id="tieneHijos" rendered="#{not(contexto == 'vista')}" onLabel="SI" offLabel="NO" />
+                        <p:message for="tieneHijos"/>
+                        
+                        
+                        <p:outputLabel value="Cantidad Hijos" for="cantidadHijos" />
+                        <h:outputText value="#{curriculoBean.actual.cantidadHijos}" rendered="#{(contexto == 'vista')}"/>
+                        <p:spinner value="#{curriculoBean.actual.cantidadHijos}" required="true" id="cantidadHijos" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="cantidadHijos"/>
+                        
+                        
+
+                        <p:outputLabel value="Tipo Documento" for="tipoDocumento" />
+                        <h:outputText value="#{curriculoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        <p:message for="tipoDocumento"/>
+                        
+                        
+                        <p:outputLabel value="Sexo" for="sexo" />
+                        <h:outputText value="#{curriculoBean.actual.sexo}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.sexo}" required="true" id="sexo" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{productorEnums.obtSexo()}"/>
+                        </p:selectOneMenu>
+                        <p:message for="sexo"/>
+                        
+                        
+                        <p:outputLabel value="Estado Civil" for="estadoCivil" />
+                        <h:outputText value="#{curriculoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.estadoCivil}" required="true" id="estadoCivil" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        <p:message for="estadoCivil"/>
+                        
+                        <p:outputLabel value="Area" for="area" />
+                        <h:outputText value="#{curriculoBean.actual.area.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.area}" required="true" id="area" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        <p:message for="area"/>
+                        
+                        <p:outputLabel value="Empresa" for="empresa" />
+                        <h:outputText value="#{curriculoBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.empresa}" required="true" id="empresa" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        <p:message for="empresa"/>
+                        
+                        <p:outputLabel value="Nivel Académico" for="nivelAcademico" />
+                        <h:outputText value="#{curriculoBean.actual.nivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.nivelAcademico}" required="true" id="nivelAcademico" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        <p:message for="nivelAcademico"/>
+                        
+                        <p:outputLabel value="Estado Nivel Académico" for="estadoNivelAcademico" />
+                        <h:outputText value="#{curriculoBean.actual.estadoNivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.estadoNivelAcademico}" required="true" id="estadoNivelAcademico" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>  
+                        <p:message for="estadoNivelAcademico"/>
+
+
+                        <p:outputLabel value="Documento" for="documento" />
+                        <h:outputText value="#{curriculoBean.actual.documento}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.documento}" required="true" id="documento" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="documento"/>
+
+
+                        <p:outputLabel value="Fecha Nacimiento" for="anioNac" />
+                        <h:outputText value="#{curriculoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}">
+                            <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                        </h:outputText>
+                        <p:outputPanel>
+                            <div style="display: table; width: 50%">
+                                <div style="display: table-cell;width: 30%">
+                                    <p:selectOneMenu value="#{curriculoBean.diaNac}" required="true" id="diasNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsDias}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div style="display: table-cell;width: 30%">
+                                    <p:selectOneMenu value="#{curriculoBean.mesNac}" required="true" id="mesNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsMes}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div style="display: table-cell;width: 30%">
+                                    <p:selectOneMenu value="#{curriculoBean.anioNac}" required="true" id="anioNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsAnios}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+
+
+                        <p:message for="anioNac"/>
+
+
+
+
+                    </h:panelGrid>  
+                </p:outputPanel>
+
+                <div class="EmptyBox20"></div>
+                <div class="FontVoltRegular Blue Fs26">
+                    <span>Nivel Académico</span>
+                </div>
+
+                <div class="Separator"></div>
+
+
+
+                <div class="FontVoltRegular Blue Fs26">
+                    <span>Referencias Laborales</span>
+                </div>
+
+                <div class="Separator"></div>
+
+
+                <div class="FontVoltRegular Blue Fs26">
+                    <span>Referencias Personales</span>
+                </div>
+
+                <div class="Separator"></div>
+
+
+                <div class="FontVoltRegular Blue Fs26">
+                    <span>Adjuntar Curriculum</span>
+                </div>
+
+                <div class="Separator"></div>
+
+
+                <p:outputPanel id="panelAdjunto">
+                    <p:fileUpload fileUploadListener="#{curriculoBean.handleFileUpload}" mode="advanced"
+                                  rendered="#{(empty curriculoBean.actual.adjunto)}"
+                                  label="Elegir"
+                                  update="panelAdjunto panelArchivo" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(pdf|doc|docx)$/" />
+                </p:outputPanel>
+                <p:outputPanel id="panelArchivo">
+
+                    <p:outputPanel rendered="#{not(empty curriculoBean.actual.adjunto)}">
+                        <a href="/CurriculoAdm/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">#{curriculoBean.actual.adjunto}</span></a>
                     </p:outputPanel>
 
-                    <br/>
+                </p:outputPanel>
+
+                <br/>
 
 
-                    <p:commandButton value="Crear" action="#{curriculoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
-                    <p:commandButton value="Guardar" action="#{curriculoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
-                    
-                    <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
-                        <f:param name="id" value="#{curriculoBean.actual.id}"/>
-                    </p:button>
-                    
+                <p:commandButton value="Crear" action="#{curriculoBean.guardar()}" styleClass="Fleft GreenButton" update="panel panelArchivo panelAdjunto" rendered="#{(contexto == 'creacion')}"/>
+                <p:commandButton value="Guardar" action="#{curriculoBean.edit()}" styleClass="Fleft BlueButton" update="panel panelArchivo panelAdjunto" rendered="#{(contexto == 'edicion')}"/>
 
-                </h:form>
+                <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
+                    <f:param name="id" value="#{curriculoBean.actual.id}"/>
+                </p:button>
 
-            </div>
+
+            </h:form>
+
         </div>
     </div>
+
 </ui:composition>
 

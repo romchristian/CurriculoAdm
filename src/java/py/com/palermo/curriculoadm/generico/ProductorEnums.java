@@ -10,6 +10,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
+import py.com.palermo.curriculoadm.entities.Sexo;
 
 /**
  *
@@ -34,6 +35,17 @@ public class ProductorEnums implements Serializable {
         EstadoCurriculo[] lista = EstadoCurriculo.values();
         for (int i = 0; i < lista.length; i++) {
             EstadoCurriculo e = lista[i];
+            R[i] = new SelectItem(e, e.toString());
+        }
+        return R;
+    }
+    
+    
+    public SelectItem[] obtSexo() {
+        SelectItem[] R = new SelectItem[Sexo.values().length];
+        Sexo[] lista = Sexo.values();
+        for (int i = 0; i < lista.length; i++) {
+            Sexo e = lista[i];
             R[i] = new SelectItem(e, e.toString());
         }
         return R;

@@ -75,7 +75,7 @@ public class EstadoNivelAcademico implements Serializable , Auditable{
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.EstadoNivelAcademico[ id=" + id + " ]";
+        return nombre;
     }
 
 }

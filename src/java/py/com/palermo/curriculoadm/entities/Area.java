@@ -75,7 +75,7 @@ public class Area implements Serializable , Auditable{
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.Area[ id=" + id + " ]";
+        return nombre;
     }
 
 }

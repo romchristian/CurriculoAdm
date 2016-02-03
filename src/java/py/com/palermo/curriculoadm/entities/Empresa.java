@@ -75,7 +75,7 @@ public class Empresa implements Serializable , Auditable{
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.Empresa[ id=" + id + " ]";
+        return nombre;
     }
 
 }
