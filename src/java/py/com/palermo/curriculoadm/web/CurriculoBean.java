@@ -54,14 +54,14 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
             refsLaboral.add(new ReferenciaLaboral());
             refsLaboral.add(new ReferenciaLaboral());
             
-            getActual().setReferenciasLaborales(refsLaboral);
+            R.setReferenciasLaborales(refsLaboral);
             
             
             List<ReferenciaPersonal> refsPersonales = new ArrayList<>();
             refsPersonales.add(new ReferenciaPersonal());
             refsPersonales.add(new ReferenciaPersonal());
             
-            getActual().setReferenciasPersonales(refsPersonales);
+            R.setReferenciasPersonales(refsPersonales);
         }
         
         return R;
