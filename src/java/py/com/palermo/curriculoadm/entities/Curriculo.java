@@ -17,8 +17,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Email;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -27,6 +35,8 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  */
 @Entity
 public class Curriculo implements Serializable, Auditable {
+
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +74,9 @@ public class Curriculo implements Serializable, Auditable {
 
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReferenciaPersonal> referenciasPersonales;
+    
+    @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExperienciaLaboral> experienciasLaborales;
 
     @Enumerated(EnumType.STRING)
     private EstadoCurriculo estadoCurriculo;
@@ -74,6 +87,17 @@ public class Curriculo implements Serializable, Auditable {
     private Integer rating;
     private String adjunto;
 
+    private Integer diaNac;
+    private String mesNac;
+    private String anioNac;
+
+    @Transient
+    private Integer edad;
+
+    @ManyToOne
+    private Nacionalidad nacionalidad;
+
+    @Override
     public Long getId() {
         return id;
     }
@@ -260,6 +284,59 @@ public class Curriculo implements Serializable, Auditable {
 
     public String getNombreAdjunto() {
         return directoryUUID + adjunto;
+    }
+
+    public Integer getDiaNac() {
+        return diaNac;
+    }
+
+    public void setDiaNac(Integer diaNac) {
+        this.diaNac = diaNac;
+    }
+
+    public String getMesNac() {
+        return mesNac;
+    }
+
+    public void setMesNac(String mesNac) {
+        this.mesNac = mesNac;
+    }
+
+    public String getAnioNac() {
+        return anioNac;
+    }
+
+    public void setAnioNac(String anioNac) {
+        this.anioNac = anioNac;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+   
+    public Nacionalidad getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(Nacionalidad nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    @PostLoad
+    public void postload() {
+
+        LocalDate birthdate = LocalDate.parse( anioNac+"-"+mesNac+"-"+diaNac,
+                DateTimeFormat.forPattern("yyyy-MM-dd"));
+       
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthdate, now);
+
+        setEdad(edad);
     }
 
     @Override

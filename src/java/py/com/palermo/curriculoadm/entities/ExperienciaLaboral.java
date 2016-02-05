@@ -18,19 +18,16 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class ReferenciaLaboral implements Serializable, Auditable {
+public class ExperienciaLaboral implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombreEmpresa;
-    private String cargo;
-    private String contactoNombre;
-    private String contactoTelefono;
-    private Integer indice;
+    private String descripcion;
     @ManyToOne
     private Curriculo curriculo;
+    private Integer indice;
 
     @Override
     public Long getId() {
@@ -41,44 +38,12 @@ public class ReferenciaLaboral implements Serializable, Auditable {
         this.id = id;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public String getContactoNombre() {
-        return contactoNombre;
-    }
-
-    public void setContactoNombre(String contactoNombre) {
-        this.contactoNombre = contactoNombre;
-    }
-
-    public String getContactoTelefono() {
-        return contactoTelefono;
-    }
-
-    public void setContactoTelefono(String contactoTelefono) {
-        this.contactoTelefono = contactoTelefono;
-    }
-
-    public Integer getIndice() {
-        return indice;
-    }
-
-    public void setIndice(Integer indice) {
-        this.indice = indice;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Curriculo getCurriculo() {
@@ -89,7 +54,13 @@ public class ReferenciaLaboral implements Serializable, Auditable {
         this.curriculo = curriculo;
     }
 
-    
+    public Integer getIndice() {
+        return indice;
+    }
+
+    public void setIndice(Integer indice) {
+        this.indice = indice;
+    }
 
     @Override
     public int hashCode() {
@@ -101,10 +72,10 @@ public class ReferenciaLaboral implements Serializable, Auditable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReferenciaLaboral)) {
+        if (!(object instanceof ExperienciaLaboral)) {
             return false;
         }
-        ReferenciaLaboral other = (ReferenciaLaboral) object;
+        ExperienciaLaboral other = (ExperienciaLaboral) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -113,7 +84,7 @@ public class ReferenciaLaboral implements Serializable, Auditable {
 
     @Override
     public String toString() {
-        return "py.com.palermo.curriculoadm.entities.ExperienciaLaboral[ id=" + id + " ]";
+        return descripcion;
     }
 
 }

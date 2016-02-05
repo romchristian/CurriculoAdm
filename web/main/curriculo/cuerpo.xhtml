@@ -7,270 +7,214 @@
 
 
 
-    <div class="Container100">
+    <div class="Container100 ui-fluid">
         <div class="Card">
 
 
-            <style type="text/css">
-                .FieldTitle{
-                    text-align: right;
-                    width: 30%;
-                    margin-right: 10px;
-                }
-                .FieldWidget{
-                    text-align: left;
-                    width: 60%;
-                }
-            </style>
+
             <h:form>
 
 
                 <p:outputPanel id="panel">
 
-                    <div class="FontVoltRegular Blue Fs26">
-                        <span>Datos Personales</span>
-                    </div>
+                    <div class="CardTopic">Datos Personales</div>
+
 
                     <div class="Separator"></div>
                     <div class="EmptyBox20"></div>
 
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                        <p:outputLabel value="Nombre y Apellido" for="nombre" />
+                        <h:outputText value="#{curriculoBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-                    <div class="Container100 Responsive100">
+
+                        <p:outputLabel value="Sexo" for="sexo" />
+                        <h:outputText value="#{curriculoBean.actual.sexo}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.sexo}" required="true" id="sexo" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{productorEnums.obtSexo()}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Estado Civil" for="estadoCivil" />
+                        <h:outputText value="#{curriculoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.estadoCivil}" required="true" id="estadoCivil" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Cantidad Hijos" for="cantidadHijos" />
+                        <p:spinner value="#{curriculoBean.actual.cantidadHijos}" required="true" id="cantidadHijos" rendered="#{not(contexto == 'vista')}" />
+                        <h:outputText value="#{curriculoBean.actual.cantidadHijos}" rendered="#{(contexto == 'vista')}"/>
+
+
+
+                        <p:outputLabel value="Fecha Nacimiento" for="anioNac" />
+                        <h:outputText value="#{curriculoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}">
+                            <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                        </h:outputText>
+                        <p:outputPanel>
+                            <div style="display: table; width: 100%">
+                                <div style="display: table-cell;width: 20%">
+                                    <p:selectOneMenu value="#{curriculoBean.actual.diaNac}" required="true" id="diasNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsDias}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div style="display: table-cell;width: 50%">
+                                    <p:selectOneMenu value="#{curriculoBean.actual.mesNac}" required="true" id="mesNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsMes}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div style="display: table-cell;width: 30%">
+                                    <p:selectOneMenu value="#{curriculoBean.actual.anioNac}" required="true" id="anioNac" rendered="#{not(contexto == 'vista')}">
+                                        <f:selectItems value="#{curriculoBean.selectItemsAnios}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+
+
+
+                        <p:outputLabel value="Tipo Documento" for="tipoDocumento" />
+                        <h:outputText value="#{curriculoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}"/>
+                        <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" rendered="#{not(contexto == 'vista')}" styleClass="Wid40">
+                            <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+
+
+                        <p:outputLabel value="Documento" for="documento" />
+                        <h:outputText value="#{curriculoBean.actual.documento}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.documento}" required="true" id="documento" rendered="#{not(contexto == 'vista')}"/>
+
+
+                        <p:outputLabel value="Dirección" for="direccion" />
+                        <h:outputText value="#{curriculoBean.actual.direccion}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.direccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
+
+
+
+                        <p:outputLabel value="Teléfonos" for="telefonos" />
+                        <h:outputText value="#{curriculoBean.actual.telefonos}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.telefonos}" required="true" id="telefonos" rendered="#{not(contexto == 'vista')}"/>
+
+
+                        <p:outputLabel value="E-mail" for="email" />
+                        <h:outputText value="#{curriculoBean.actual.email}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{curriculoBean.actual.email}"  id="email" rendered="#{not(contexto == 'vista')}"/>
+
+
+                    </p:panelGrid>
+
+
+
+
+
+
+                    <div class="EmptyBox20"></div>
+                    <div class="FontVoltRegular Blue Fs26">
+                        <span>Área a la que se postula</span>
+                    </div>
+
+                    <div class="Separator"></div>
+
+
+
+
+
+                    <div class="Container50 Responsive50">
                         <div class="Container50 Responsive50">
-
-                            <h:panelGrid columns="3" columnClasses="FieldTitle,FieldWidget" >
-                                <p:outputLabel value="Nombre y Apellido" for="nombre" />
-                                <h:outputText value="#{curriculoBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
-                                <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
-                                <p:message for="nombre"/>
-
-
-
-                                <p:outputLabel value="Sexo" for="sexo" />
-                                <h:outputText value="#{curriculoBean.actual.sexo}" rendered="#{(contexto == 'vista')}"/>
-                                <p:selectOneMenu value="#{curriculoBean.actual.sexo}" required="true" id="sexo" rendered="#{not(contexto == 'vista')}" style="width: 65%">
-                                    <f:selectItems value="#{productorEnums.obtSexo()}"/>
+                            <h:panelGrid columns="3" columnClasses="Wid20,Wid50,Wid30">
+                                <p:outputLabel value="Empresa" for="empresa"/>
+                                <h:outputText value="#{curriculoBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
+                                <p:selectOneMenu value="#{curriculoBean.actual.empresa}" required="true" id="empresa" rendered="#{not(contexto == 'vista')}" styleClass="Wid100">
+                                    <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
                                 </p:selectOneMenu>
-                                <p:message for="sexo"/>
+                                <p:message for="empresa"/>
+                            </h:panelGrid>
 
-
-                                <p:outputLabel value="Estado Civil" for="estadoCivil" />
-                                <h:outputText value="#{curriculoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}"/>
-                                <p:selectOneMenu value="#{curriculoBean.actual.estadoCivil}" required="true" id="estadoCivil" rendered="#{not(contexto == 'vista')}" style="width: 65%">
-                                    <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
-                                </p:selectOneMenu>
-                                <p:message for="estadoCivil"/>
-
-                                <p:outputLabel value="Tiene Hijos" for="tieneHijos" />
-
-                                <p:outputPanel>
-                                    <div style="display: table">
-
-                                        <div style="display: table-cell">
-                                            <h:outputText value="#{curriculoBean.actual.tieneHijos == true?'SI': 'NO'}" rendered="#{(contexto == 'vista')}"/>
-                                            <p:selectBooleanButton value="#{curriculoBean.actual.tieneHijos}" id="tieneHijos" rendered="#{not(contexto == 'vista')}" onLabel="SI" offLabel="NO" />
-
-                                        </div>
-                                        <div style="display: table-cell">
-                                            <p:inputText value="#{curriculoBean.actual.cantidadHijos}" required="true" id="cantidadHijos" rendered="#{not(contexto == 'vista')}" placeholder="Cantidad Hijos" style="width: 60%"/>
-                                            <h:outputText value="#{curriculoBean.actual.cantidadHijos}" rendered="#{(contexto == 'vista')}"/>
-                                        </div>
-                                    </div>
-                                </p:outputPanel>
-
-
-                                <p:message for="cantidadHijos"/>
-
-
-
-
-
-
-
-
-                                <p:outputLabel value="Fecha Nacimiento" for="anioNac" />
-                                <h:outputText value="#{curriculoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}">
-                                    <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
-                                </h:outputText>
-                                <p:outputPanel>
-                                    <div style="display: table; width: 100%">
-                                        <div style="display: table-cell;width: 20%">
-                                            <p:selectOneMenu value="#{curriculoBean.diaNac}" required="true" id="diasNac" rendered="#{not(contexto == 'vista')}">
-                                                <f:selectItems value="#{curriculoBean.selectItemsDias}"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div style="display: table-cell;width: 50%">
-                                            <p:selectOneMenu value="#{curriculoBean.mesNac}" required="true" id="mesNac" rendered="#{not(contexto == 'vista')}">
-                                                <f:selectItems value="#{curriculoBean.selectItemsMes}"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div style="display: table-cell;width: 30%">
-                                            <p:selectOneMenu value="#{curriculoBean.anioNac}" required="true" id="anioNac" rendered="#{not(contexto == 'vista')}">
-                                                <f:selectItems value="#{curriculoBean.selectItemsAnios}"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                    </div>
-                                </p:outputPanel>
-
-
-                                <p:message for="anioNac"/>
-
-
-
-
-                            </h:panelGrid>  
                         </div>
                         <div class="Container50 Responsive50">
-                            <h:panelGrid columns="3" columnClasses="FieldTitle,FieldWidget" >
-
-
-
-                                <p:outputLabel value="Tipo Documento" for="tipoDocumento" />
-                                <h:outputText value="#{curriculoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}"/>
-                                <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" rendered="#{not(contexto == 'vista')}" styleClass="Wid40">
-                                    <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                            <h:panelGrid columns="3" columnClasses="Wid20,Wid50,Wid30">
+                                <p:outputLabel value="Area" for="area" styleClass="Wid20"/>
+                                <h:outputText value="#{curriculoBean.actual.area.nombre}" rendered="#{(contexto == 'vista')}"/>
+                                <p:selectOneMenu value="#{curriculoBean.actual.area}" required="true" id="area" rendered="#{not(contexto == 'vista')}" styleClass="Wid100">
+                                    <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
                                 </p:selectOneMenu>
-                                <p:message for="tipoDocumento"/>
+                                <p:message for="area"/>
+                            </h:panelGrid>
 
-
-                                <p:outputLabel value="Documento" for="documento" />
-                                <h:outputText value="#{curriculoBean.actual.documento}" rendered="#{(contexto == 'vista')}"/>
-                                <p:inputText value="#{curriculoBean.actual.documento}" required="true" id="documento" rendered="#{not(contexto == 'vista')}"/>
-                                <p:message for="documento"/>
-
-                                <p:outputLabel value="Dirección" for="direccion" />
-                                <h:outputText value="#{curriculoBean.actual.direccion}" rendered="#{(contexto == 'vista')}"/>
-                                <p:inputText value="#{curriculoBean.actual.direccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
-                                <p:message for="direccion"/>
-
-
-                                <p:outputLabel value="Teléfonos" for="telefonos" />
-                                <h:outputText value="#{curriculoBean.actual.telefonos}" rendered="#{(contexto == 'vista')}"/>
-                                <p:inputText value="#{curriculoBean.actual.telefonos}" required="true" id="telefonos" rendered="#{not(contexto == 'vista')}"/>
-                                <p:message for="telefonos"/>
-
-                                <p:outputLabel value="E-mail" for="email" />
-                                <h:outputText value="#{curriculoBean.actual.email}" rendered="#{(contexto == 'vista')}"/>
-                                <p:inputText value="#{curriculoBean.actual.email}"  id="email" rendered="#{not(contexto == 'vista')}"/>
-                                <p:message for="email"/>
+                        </div>
+                    </div>
+                    <div class="EmptyBox20"></div>
 
 
 
-                            </h:panelGrid>  
+                    <div class="FontVoltRegular Blue Fs26">
+                        <span>Nivel Académico</span>
+                    </div>
+
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+
+                    <div class="Container50 Responsive50">
+                        <div class="Container50 Responsive60">
+                            <h:panelGrid columns="3" columnClasses="Wid40,Wid30,Wid20">
+                                <p:outputLabel value="Nivel Académico" for="nivelAcademico" styleClass="Wid100"/>
+                                <h:outputText value="#{curriculoBean.actual.nivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
+                                <p:selectOneMenu value="#{curriculoBean.actual.nivelAcademico}" required="true" id="nivelAcademico" rendered="#{not(contexto == 'vista')}">
+                                    <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu>
+                                <p:message for="nivelAcademico"/>
+                            </h:panelGrid>
+                        </div>
+                        <div class="Container50 Responsive40">
+                            <h:panelGrid columns="3" columnClasses="Wid40,Wid30,Wid20">
+                                <p:outputLabel value="Estado" for="nivelAcademico" styleClass="Wid100"/>
+                                <h:outputText value="#{curriculoBean.actual.estadoNivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
+                                <p:selectOneMenu value="#{curriculoBean.actual.estadoNivelAcademico}" required="true" id="estadoNivelAcademico" rendered="#{not(contexto == 'vista')}">
+                                    <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu>  
+                                <p:message for="estadoNivelAcademico"/>
+                            </h:panelGrid>
+
                         </div>
                     </div>
 
 
+                    <div class="EmptyBox20"></div>
+                    <div class="FontVoltRegular Blue Fs26">
+                        <span>Referencias Laborales</span>
+                    </div>
 
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+                    <p:dataGrid value="#{curriculoBean.actual.referenciasLaborales}" var="r">
+                        <p:panelGrid columns="4" layout="grid" style="border: none;width: 80%"> 
+                            <p:inputText value="#{r.nombreEmpresa}" placeholder="Empresa" class="Wid90"/>
+                            <p:inputText value="#{r.cargo}" placeholder="Cargo" class="Wid90"/>
+                            <p:inputText value="#{r.contactoNombre}" placeholder="Nombre Contacto" class="Wid90"/>
+                            <p:inputText value="#{r.contactoTelefono}" placeholder="Telefono Contacto" class="Wid90"/>
+                        </p:panelGrid>
+                    </p:dataGrid>
+
+                    <div class="EmptyBox20"></div>
+                    <div class="FontVoltRegular Blue Fs26">
+                        <span>Referencias Personales</span>
+                    </div>
+
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+
+                    <p:dataGrid value="#{curriculoBean.actual.referenciasPersonales}" var="r">
+                        <p:panelGrid columns="2" layout="grid" style="border: none;width: 40%"> 
+                            <p:inputText value="#{r.contactoNombre}" placeholder="Nombre Contacto" class="Wid90"/>
+                            <p:inputText value="#{r.contactoTelefono}" placeholder="Telefono Contacto" class="Wid90"/>
+                        </p:panelGrid>
+                    </p:dataGrid>
                 </p:outputPanel>
-
-
-                <div class="EmptyBox20"></div>
-                <div class="FontVoltRegular Blue Fs26">
-                    <span>Área a la que se postula</span>
-                </div>
-
-                <div class="Separator"></div>
-
-
-
-
-
-                <div class="Container50 Responsive50">
-                    <div class="Container50 Responsive50">
-                        <h:panelGrid columns="3" columnClasses="Wid20,Wid50,Wid30">
-                            <p:outputLabel value="Empresa" for="empresa"/>
-                            <h:outputText value="#{curriculoBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.empresa}" required="true" id="empresa" rendered="#{not(contexto == 'vista')}" styleClass="Wid100">
-                                <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>
-                            <p:message for="empresa"/>
-                        </h:panelGrid>
-
-                    </div>
-                    <div class="Container50 Responsive50">
-                        <h:panelGrid columns="3" columnClasses="Wid20,Wid50,Wid30">
-                            <p:outputLabel value="Area" for="area" styleClass="Wid20"/>
-                            <h:outputText value="#{curriculoBean.actual.area.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.area}" required="true" id="area" rendered="#{not(contexto == 'vista')}" styleClass="Wid100">
-                                <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>
-                            <p:message for="area"/>
-                        </h:panelGrid>
-
-                    </div>
-                </div>
-                <div class="EmptyBox20"></div>
-
-
-
-                <div class="FontVoltRegular Blue Fs26">
-                    <span>Nivel Académico</span>
-                </div>
-
-                <div class="Separator"></div>
-
-                <div class="EmptyBox20"></div>
-
-
-                <div class="Container50 Responsive50">
-                    <div class="Container50 Responsive60">
-                        <h:panelGrid columns="3" columnClasses="Wid40,Wid30,Wid20">
-                            <p:outputLabel value="Nivel Académico" for="nivelAcademico" styleClass="Wid100"/>
-                            <h:outputText value="#{curriculoBean.actual.nivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.nivelAcademico}" required="true" id="nivelAcademico" rendered="#{not(contexto == 'vista')}" styleClass="Wid80">
-                                <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>
-                            <p:message for="nivelAcademico"/>
-                        </h:panelGrid>
-                    </div>
-                    <div class="Container50 Responsive40">
-                        <h:panelGrid columns="3" columnClasses="Wid40,Wid30,Wid20">
-                            <p:outputLabel value="Estado" for="nivelAcademico" styleClass="Wid100"/>
-                            <h:outputText value="#{curriculoBean.actual.estadoNivelAcademico.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.estadoNivelAcademico}" required="true" id="estadoNivelAcademico" rendered="#{not(contexto == 'vista')}" styleClass="Wid80">
-                                <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>  
-                            <p:message for="estadoNivelAcademico"/>
-                        </h:panelGrid>
-
-                    </div>
-                </div>
-
-
-                <div class="EmptyBox20"></div>
-                <div class="FontVoltRegular Blue Fs26">
-                    <span>Referencias Laborales</span>
-                </div>
-
-                <div class="Separator"></div>
-                <div class="EmptyBox20"></div>
-                <p:dataGrid value="#{curriculoBean.actual.referenciasLaborales}" var="r">
-                    <p:panelGrid columns="4" layout="grid" style="border: none;width: 80%"> 
-                        <p:inputText value="#{r.nombreEmpresa}" placeholder="Empresa" class="Wid90"/>
-                        <p:inputText value="#{r.cargo}" placeholder="Cargo" class="Wid90"/>
-                        <p:inputText value="#{r.contactoNombre}" placeholder="Nombre Contacto" class="Wid90"/>
-                        <p:inputText value="#{r.contactoTelefono}" placeholder="Telefono Contacto" class="Wid90"/>
-                    </p:panelGrid>
-                </p:dataGrid>
-
-                <div class="EmptyBox20"></div>
-                <div class="FontVoltRegular Blue Fs26">
-                    <span>Referencias Personales</span>
-                </div>
-
-                <div class="Separator"></div>
-
-                <div class="EmptyBox20"></div>
-
-
-                <p:dataGrid value="#{curriculoBean.actual.referenciasPersonales}" var="r">
-                    <p:panelGrid columns="2" layout="grid" style="border: none;width: 40%"> 
-                        <p:inputText value="#{r.contactoNombre}" placeholder="Nombre Contacto" class="Wid90"/>
-                        <p:inputText value="#{r.contactoTelefono}" placeholder="Telefono Contacto" class="Wid90"/>
-                    </p:panelGrid>
-                </p:dataGrid>
-
 
                 <div class="EmptyBox20"></div>
                 <div class="FontVoltRegular Blue Fs26">
@@ -293,6 +237,8 @@
                     </p:outputPanel>
 
                 </p:outputPanel>
+
+
 
                 <div class="EmptyBox20"></div>
 
