@@ -9,7 +9,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 import py.com.palermo.curriculoadm.entities.Curriculo;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
@@ -53,6 +55,26 @@ public class CurriculoDAO implements ICurriculoDAO {
     @Override
     public List<Curriculo> findAll(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public List<Curriculo> findAllActive() {
+        return abmService.getEM().createQuery("select obj from Curriculo obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<Curriculo> findAllActive(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public List<Curriculo> findAllFilter(String filters) {
+        System.out.println("Filters: " + filters);
+        Query query = abmService.getEM().createNativeQuery("SELECT * FROM curriculo " + filters, Curriculo.class);
+        List<Curriculo> items = (List<Curriculo>) query.getResultList();
+        return items;
     }
 
 }

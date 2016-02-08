@@ -8,39 +8,163 @@
 
     <ui:define name="content">
 
-        <h:form id="formList">
-            <div class="Container100 Responsive100">
-                <div class="ContainerIndent">
-                    <div class="Card ShadowEffect HeiAutoOnMobile">
-                        <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10"></i>LISTADO DE CURRICULUMS
-                            <p:button id="createButton" value="Nuevo" outcome="nuevo" styleClass="GreenButton Fright"/>
-                            <p:button id="viewButton"   value="Ver" outcome="vista" disabled="#{empty curriculoBean.actual.id}" styleClass="Button Fright">
-                                <f:param name="id" value="#{curriculoBean.actual.id}"/>
-                            </p:button>
-                        </h2>
-                        <div class="Separator"/>
+        <style type="text/css">
+            .ui-panelgrid-cell .ui-grid-col-12{
+                padding-left : 0px!important;
+                margin-left: 0px!important;
+            }
+        </style>
+        <div class="Container100 ui-fluid">
+            <div class="Card">
 
 
-                        <p:dataTable value="#{curriculoBean.findAll()}" var="e" paginator="true" rows="20" paginatorPosition="bottom" reflow="true"
-                                     selection="#{curriculoBean.actual}"
-                                     rowKey="#{e.id}"
-                                     selectionMode="single">
 
-                            <p:ajax event="rowSelect"   update=":formList:createButton :formList:viewButton"/>
-                            <p:ajax event="rowUnselect" update=":formList:createButton :formList:viewButton"/>
+                <h:form>
 
-                           
 
-                            <p:column headerText="Nombre">
-                                <h:outputText value="#{e.nombres}"/>
-                            </p:column>
-                            
-                        </p:dataTable>
 
-                    </div>
-                </div>
+                    <div class="CardTopic">Busqueda Avanzada</div>
+
+
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+
+
+
+
+
+
+
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+
+                        <p:outputLabel value="Nombre y Apellido" for="nombre"/>
+                        <p:inputText value="#{curriculoFilter.nombre}" id="nombre"/>
+
+                        <p:outputLabel value="Tipo Documento" for="tipoDocumento"/>
+                        <p:selectOneMenu value="#{curriculoFilter.tipoDocumento}" id="tipoDocumento">
+                            <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Empresa" for="empresa"/>
+                        <p:selectOneMenu value="#{curriculoFilter.empresa}" id="empresa">
+                            <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Area" for="area"/>
+                        <p:selectOneMenu value="#{curriculoFilter.area}" id="area">
+                            <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Nivel Académico" for="nivelAcademico"/>
+                        <p:selectOneMenu value="#{curriculoFilter.nivelAcademico}" id="nivelAcademico">
+                            <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel value="Estado" for="estadoNivelAcademico"/>
+                        <p:selectOneMenu value="#{curriculoFilter.estadoNivelAcademico}" id="estadoNivelAcademico">
+                            <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+
+
+                        <p:outputLabel value="Edad" for="panelEdad"/>
+                        <p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;padding: 0px;margin: 0px;" id="panelEdad">
+                            <p:outputLabel value="Entre #{curriculoFilter.rangoEdad1} y #{curriculoFilter.rangoEdad2}" for="edad" id="displayRange"/>
+                            <p:slider for="edad1,edad2" display="displayRange" style="padding: 0px;margin: 0px" range="true" displayTemplate="Entre {min} y {max}"  minValue="18" maxValue="50"
+                                      id="edad"/>
+                            <h:inputHidden id="edad1" value="#{curriculoFilter.rangoEdad1}" />
+                            <h:inputHidden id="edad2" value="#{curriculoFilter.rangoEdad2}" />
+                        </p:panelGrid>
+
+
+                        <p:outputLabel value="Genero" for="sexo"/>
+                        <p:selectOneMenu value="#{curriculoFilter.sexo}" id="sexo">
+                            <f:selectItem itemLabel="---" itemValue=""/>
+                            <f:selectItem itemLabel="Hombre" itemValue="Hombre"/>
+                            <f:selectItem itemLabel="Mujer" itemValue="Mujer"/>
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel value="Hijos" for="hijos"/>
+                        <p:selectOneMenu value="#{curriculoFilter.tieneHijos}" id="hijos">
+                            <f:selectItem itemLabel="---" itemValue=""/>
+                            <f:selectItem itemLabel="Sin Hijos" itemValue="SIN HIJOS"/>
+                            <f:selectItem itemLabel="Con Hijos" itemValue="CON HIJOS"/>
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Nacionalidad" for="nacionalidad"/>
+                        <p:selectOneMenu value="#{curriculoFilter.nacionalidad}" id="nacionalidad">
+                            <f:selectItems value="#{nacionalidadBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Buscar" action="#{curriculoFilter.busca()}" update="resultado" icon="fa fa-search"/>
+                    </p:panelGrid>
+
+
+
+
+
+
+
+                    <p:dataTable value="#{curriculoFilter.resultado}" var="e" paginator="true" rows="20" paginatorPosition="bottom" reflow="true"
+                                 selection="#{curriculoFilter.actual}"
+                                 rowKey="#{e.id}"
+                                 id="resultado"
+                                 selectionMode="single">
+
+
+
+
+                        <p:column headerText="Nombre">
+                            <p:link outcome="vista" value="#{e.nombres}">
+                                <f:param name="id" value="#{e.id}"/>
+                            </p:link>
+                        </p:column>
+
+                        <p:column headerText="Edad">
+                            <h:outputText value="#{e.edad}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado Civil">
+                            <h:outputText value="#{e.estadoCivil.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Nacionalidad">
+                            <h:outputText value="#{e.nacionalidad.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Sexo">
+                            <h:outputText value="#{e.sexo}"/>
+                        </p:column>
+
+                        <p:column headerText="Cant. Hijos">
+                            <h:outputText value="#{e.cantidadHijos}"/>
+                        </p:column>
+
+                        <p:column headerText="Nivel Académico">
+                            <h:outputText value="#{e.nivelAcademico.nombre} - #{e.estadoNivelAcademico.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Área">
+                            <h:outputText value="#{e.empresa.nombre} - #{e.area.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Adjunto">
+                            <p:outputPanel rendered="#{not(empty e.adjunto)}">
+                                <a href="#{request.contextPath}/DownloadServlet?nombre=#{e.nombreAdjunto}&amp;nombreCorto=#{e.nombres}-Curriculum"><i class="icon-paperclip Blue Fs14"/><span class="FontVoltRegular Fs14 Blue">Curriculum</span></a>
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{(empty e.adjunto)}">
+                                <h:outputText value="No tiene"/>
+                            </p:outputPanel>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:form>
             </div>
-        </h:form>
+        </div>
 
 
     </ui:define>

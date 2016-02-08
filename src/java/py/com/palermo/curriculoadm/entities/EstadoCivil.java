@@ -29,6 +29,12 @@ public class EstadoCivil implements Serializable , Auditable{
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
+    public EstadoCivil() {
+        estado = Estado.ACTIVO;
+    }
+    
+    
+
     public Estado getEstado() {
         return estado;
     }

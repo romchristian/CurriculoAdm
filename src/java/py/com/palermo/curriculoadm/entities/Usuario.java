@@ -36,6 +36,10 @@ public class Usuario implements Serializable, Auditable {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
+    public Usuario() {
+        estado = Estado.ACTIVO;
+    }
+
     public Estado getEstado() {
         return estado;
     }

@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.entities.EstadoCivil;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
@@ -55,4 +56,15 @@ public class EstadoCivilDAO implements IEstadoCivilDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    @Override
+    public List<EstadoCivil> findAllActive() {
+        return abmService.getEM().createQuery("select obj from EstadoCivil obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<EstadoCivil> findAllActive(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
 }

@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.entities.EstadoNivelAcademico;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
@@ -52,6 +53,18 @@ public class EstadoNivelAcademicoDAO implements IEstadoNivelAcademicoDAO {
 
     @Override
     public List<EstadoNivelAcademico> findAll(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public List<EstadoNivelAcademico> findAllActive() {
+        return abmService.getEM().createQuery("select obj from EstadoNivelAcademico obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<EstadoNivelAcademico> findAllActive(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
 

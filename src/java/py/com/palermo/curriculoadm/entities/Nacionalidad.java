@@ -19,7 +19,7 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Nacionalidad implements Serializable , Auditable{
+public class Nacionalidad implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,6 +29,10 @@ public class Nacionalidad implements Serializable , Auditable{
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
+    public Nacionalidad() {
+        estado = Estado.ACTIVO;
+    }
+
     public Estado getEstado() {
         return estado;
     }
@@ -36,7 +40,7 @@ public class Nacionalidad implements Serializable , Auditable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-    
+
     public Long getId() {
         return id;
     }

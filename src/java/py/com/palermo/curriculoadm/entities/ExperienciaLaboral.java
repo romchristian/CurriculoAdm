@@ -7,6 +7,8 @@ package py.com.palermo.curriculoadm.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,22 @@ public class ExperienciaLaboral implements Serializable, Auditable {
     @ManyToOne
     private Curriculo curriculo;
     private Integer indice;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    public ExperienciaLaboral() {
+        estado = Estado.ACTIVO;
+    }
+    
+    
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
     @Override
     public Long getId() {

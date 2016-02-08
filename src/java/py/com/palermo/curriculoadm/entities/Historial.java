@@ -8,6 +8,8 @@ package py.com.palermo.curriculoadm.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,20 @@ public class Historial implements Serializable, Auditable {
     @ManyToOne
     private Usuario usuario;
     private String descripcion;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    public Historial() {
+        estado = Estado.ACTIVO;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
     @Override
     public Long getId() {

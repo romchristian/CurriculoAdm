@@ -35,5 +35,8 @@ public interface ICurriculoDAO extends AbstractDAO<Curriculo> {
 
     @Override
     void remove(Curriculo entity, String usuario);
+    
+    
+    List<Curriculo> findAllFilter(String filter);
 
 }

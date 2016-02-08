@@ -12,10 +12,232 @@
             <f:viewAction action="#{curriculoBean.cargaDatos()}"/>
         </f:metadata>
 
-        <ui:include src="cuerpo.xhtml">
-            <ui:param name="contexto" value="vista"/>
-            <ui:param name="titulo" value="VISTA DE CURRICULUM"/>
-        </ui:include>
+
+
+        <div class="Container100 ui-fluid">
+            <div class="Card">
+
+
+
+                <h:form>
+
+                    <div class="CardTopic">
+                        <p:outputPanel styleClass="Fleft">
+                            <p:link outcome="listado"><i class="Leaden Fs16 fa fa-arrow-left"></i> <span class="Leaden Fs16 FontVoltRegular">Atras</span></p:link>
+                        </p:outputPanel>
+                        <p:outputPanel id="panelArchivo" styleClass="Fright">
+
+                            <p:outputPanel rendered="#{not(empty curriculoBean.actual.adjunto)}">
+                                <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">Curriculum</span></a>
+                            </p:outputPanel>
+
+                            <p:outputPanel rendered="#{(empty curriculoBean.actual.adjunto)}">
+                                <h:outputText value="No tiene" styleClass="FontBold Fs16"/>
+                            </p:outputPanel>
+
+                        </p:outputPanel>
+                        <div class="EmptyBox20"></div>
+                        Datos Personales
+                    </div>
+
+
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+
+
+
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                        <p:outputLabel value="Nombre y Apellido" for="nombre"  styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.nombres}" id="nombre" styleClass="panelDatos" readonly="true"/>
+
+
+                        <p:outputLabel value="Genero" for="sexo" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.sexo}" id="sexo" styleClass="panelDatos" readonly="true"/>
+
+
+                        <p:outputLabel value="Estado Civil" for="estadoCivil" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.estadoCivil.nombre}" id="estadoCivil" styleClass="panelDatos" readonly="true"/>
+
+
+
+                        <p:outputLabel value="Cantidad Hijos" for="cantidadHijos" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.cantidadHijos}" id="cantidadHijos" styleClass="panelDatos" readonly="true"/>
+
+
+
+                        <p:outputLabel value="Edad" for="edad" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.edad}" id="edad" styleClass="panelDatos" readonly="true"/>
+
+
+                        <p:outputLabel value="Tipo Documento" for="tipoDocumento" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.tipoDocumento.nombre}" id="tipoDocumento" styleClass="panelDatos" readonly="true"/>
+
+                        <p:outputLabel value="Documento" for="documento" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.documento}"  id="documento" styleClass="panelDatos" readonly="true"/>
+
+
+                        <p:outputLabel value="Dirección" for="direccion" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.direccion}"  id="direccion" styleClass="panelDatos" readonly="true"/>
+
+
+
+                        <p:outputLabel value="Teléfonos" for="telefonos" />
+                        <p:inputText value="#{curriculoBean.actual.telefonos}"  id="telefonos" styleClass="panelDatos" readonly="true"/>
+
+                        <p:outputLabel value="E-mail" for="email" styleClass="panelDatos"/>
+                        <p:inputText value="#{curriculoBean.actual.email}"  id="email" styleClass="panelDatos" readonly="true"/>
+
+                        <p:outputLabel value="Nacionalidad" for="nacionalidad" styleClass="panelDatos"/>
+
+                        <p:inputText value="#{curriculoBean.actual.nacionalidad.nombre}" id="nacionalidad" styleClass="panelDatos" readonly="true"/>
+
+                        <p:outputLabel value="Estado" for="estado"/>
+                        <p:outputPanel id="estado" styleClass="panelEstado">
+                            <p:outputLabel styleClass="FontVoltBold Fs16 #{curriculoBean.actual.estadoColor} White panelEstado" style="padding: 3px" value="#{curriculoBean.actual.estadoCurriculo}"/>
+                        </p:outputPanel>
+
+
+                    </p:panelGrid>
+
+
+                    <div class="EmptyBox20"></div>
+
+                    <div class="CardTopic">Área a la que se postula</div>
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+                    <p:outputPanel id="panelArea">
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                            <p:outputLabel value="Empresa" for="empresa"/>
+                            <p:inputText value="#{curriculoBean.actual.empresa.nombre}" id="empresa" styleClass="panelDatos" readonly="true"/>
+
+                            <p:outputLabel value="Area" for="area"/>
+                            <p:inputText value="#{curriculoBean.actual.area.nombre}" id="area" styleClass="panelDatos" readonly="true"/>
+                        </p:panelGrid>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox20"></div>
+
+
+
+                    <div class="CardTopic">Nivel Académico</div>
+
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+                    <p:outputPanel id="panelNivel">
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                            <p:outputLabel value="Nivel Académico" for="nivelAcademico"/>
+                            <p:inputText value="#{curriculoBean.actual.nivelAcademico.nombre}" id="nivelAcademico" styleClass="panelDatos" readonly="true"/>
+
+                            <p:outputLabel value="Estado" for="estadoNivelAcademico"/>
+                            <p:inputText value="#{curriculoBean.actual.estadoNivelAcademico.nombre}" id="estadoNivelAcademico" styleClass="panelDatos" readonly="true"/>
+                        </p:panelGrid>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox20"></div>
+
+
+                    <div class="CardTopic">Experiencias Laborales</div>
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+
+                    <p:outputPanel id="panelExperienciaLaboral">
+
+
+                        <div class="ui-grid ui-grid-responsive">
+                            <ui:repeat value="#{curriculoBean.actual.experienciasLaborales}" var="ep">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" style="margin-bottom: 10px"> <p:outputLabel value="Experiencia #{ep.indice}" for="experiencia"/></div>
+                                    <div class="ui-grid-col-10"  style="padding-right: 5px;margin-bottom: 10px"><p:inputTextarea value="#{ep.descripcion}" id="experiencia" rows="3" readonly="true"/></div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox20"></div>
+
+                    <div class="CardTopic">Referencias Laborales</div>
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+
+                    <p:outputPanel id="panelReferenciaLaboral">
+
+
+                        <div class="ui-grid ui-grid-responsive">
+                            <ui:repeat value="#{curriculoBean.actual.referenciasLaborales}" var="rl">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" style="margin-bottom: 10px"> <p:outputLabel value="Referencia #{rl.indice}" for="empresaRL"/></div>
+                                    <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.nombreEmpresa}" placeholder="Empresa" id="empresaRL" readonly="true"/></div>
+                                    <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.cargo}" placeholder="Cargo" readonly="true"/></div>
+                                    <div class="ui-grid-col-2" style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.contactoNombre}" placeholder="Nombre Contacto" readonly="true"/></div>
+                                    <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.contactoTelefono}" placeholder="Telefono Contacto" readonly="true"/></div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox20"></div>
+
+                    <div class="CardTopic">Referencias Personales</div>
+                    <div class="Separator"></div>
+                    <div class="EmptyBox20"></div>
+
+
+                    <p:outputPanel id="panelReferenciaPersonal">
+
+
+                        <div class="ui-grid ui-grid-responsive">
+                            <ui:repeat value="#{curriculoBean.actual.referenciasPersonales}" var="r">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2" style="margin-bottom: 10px"> <p:outputLabel value="Referencia #{r.indice}" for="contactoRP"/></div>
+                                    <div class="ui-grid-col-3" style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoNombre}" id="contactoRP" placeholder="Nombre Contacto" readonly="true"/></div>
+                                    <div class="ui-grid-col-3"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoTelefono}" placeholder="Telefono Contacto" readonly="true"/></div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </p:outputPanel>
+
+
+
+
+
+
+                    <div class="EmptyBox20"></div>
+
+                    <div class="CardTopic">Cambiar de Estado</div>
+
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4 ">
+                                <p:commandButton value="Nuevo" action="#{curriculoBean.pasarANuevo()}" styleClass="Wid90" update="@(.panelEstado)" ajax="false">
+                                </p:commandButton>
+                            </div>
+                            <div class="ui-grid-col-4">
+                                <p:commandButton value="Pre Seleccionar" action="#{curriculoBean.preseleccionar()}" styleClass="Wid90 PurpleButton" update="@(.panelEstado)" ajax="false">
+                                </p:commandButton>
+                            </div>
+                            <div class="ui-grid-col-4">
+                                <p:commandButton value="Contratar" action="#{curriculoBean.contratar()}" styleClass="Wid90 GreenButton" ajax="false">
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </h:form>
+
+            </div>
+        </div>
 
     </ui:define>
 

@@ -25,6 +25,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import py.com.palermo.curriculoadm.entities.Curriculo;
+import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
+import py.com.palermo.curriculoadm.entities.ExperienciaLaboral;
 import py.com.palermo.curriculoadm.entities.ReferenciaLaboral;
 import py.com.palermo.curriculoadm.entities.ReferenciaPersonal;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
@@ -76,6 +78,21 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
                 refsPersonales.add(rp2);
 
                 R.setReferenciasPersonales(refsPersonales);
+            }
+            
+            if(R.getExperienciasLaborales() == null){
+                List<ExperienciaLaboral> expsLaborales = new ArrayList<>();
+                ExperienciaLaboral exp1 = new ExperienciaLaboral();
+                ExperienciaLaboral exp2 = new ExperienciaLaboral();
+                exp1.setIndice(1);
+                exp2.setIndice(2);
+                exp1.setCurriculo(R);
+                exp2.setCurriculo(R);
+                
+                expsLaborales.add(exp1);
+                expsLaborales.add(exp2);
+                
+                R.setExperienciasLaborales(expsLaborales);
             }
         }
 
@@ -191,5 +208,26 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         getActual().setFechaNacimiento(birthdate.toDate());
 
         edit();
+    }
+    
+    public String preseleccionar(){
+        Long idActual = getActual().getId();
+        getActual().setEstadoCurriculo(EstadoCurriculo.PRESELECCIONADO);
+        edit();
+        return "vista.xhtml?faces-redirect=true&id="+idActual;
+    }
+    
+    public String contratar(){
+        Long idActual = getActual().getId();
+        getActual().setEstadoCurriculo(EstadoCurriculo.CONTRATADO);
+        edit();
+        return "vista.xhtml?faces-redirect=true&id="+idActual;
+    }
+    
+    public String pasarANuevo(){
+        Long idActual = getActual().getId();
+        getActual().setEstadoCurriculo(EstadoCurriculo.NUEVO);
+        edit();
+        return "vista.xhtml?faces-redirect=true&id="+idActual;
     }
 }

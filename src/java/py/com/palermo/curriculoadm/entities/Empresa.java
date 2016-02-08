@@ -19,7 +19,7 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Empresa implements Serializable , Auditable{
+public class Empresa implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,6 +28,10 @@ public class Empresa implements Serializable , Auditable{
     private String nombre;
     @Enumerated(EnumType.STRING)
     private Estado estado;
+
+    public Empresa() {
+        estado = Estado.ACTIVO;
+    }
 
     public Estado getEstado() {
         return estado;

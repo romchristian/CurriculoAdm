@@ -23,4 +23,8 @@ public interface AbstractDAO<T> {
     public abstract List<T> findAll();
 
     public abstract List<T> findAll(String query, QueryParameter params);
+    
+    public abstract List<T> findAllActive();
+    
+    public abstract List<T> findAllActive(String query, QueryParameter params);
 }

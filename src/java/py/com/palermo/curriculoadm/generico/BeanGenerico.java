@@ -107,6 +107,10 @@ public abstract class BeanGenerico<T> implements Serializable {
     public List<T> findAll() {
         return getEjb().findAll();
     }
+    
+    public List<T> findAllActive() {
+        return getEjb().findAllActive();
+    }
 
     public List<T> findAllFiltros() {
         if (listado == null) {
@@ -117,11 +121,11 @@ public abstract class BeanGenerico<T> implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(findAll(), false);
+        return JsfUtil.getSelectItems(findAllActive(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(findAll(), true);
+        return JsfUtil.getSelectItems(findAllActive(), true);
     }
 
     public String preparaEdicion(T obj) {

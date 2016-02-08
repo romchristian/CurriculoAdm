@@ -10,5 +10,5 @@ package py.com.palermo.curriculoadm.entities;
  * @author christian.romero
  */
 public enum EstadoCurriculo {
-    NUEVO,SELECCIONADO,CONTRATADO
+    NUEVO,PRESELECCIONADO,CONTRATADO
 }

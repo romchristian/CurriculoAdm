@@ -8,6 +8,8 @@ package py.com.palermo.curriculoadm.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Comentario implements Serializable , Auditable{
+public class Comentario implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +35,23 @@ public class Comentario implements Serializable , Auditable{
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
     private String comentario;
+
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    public Comentario() {
+        estado = Estado.ACTIVO;
+    }
     
+    
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
     public Long getId() {
         return id;
@@ -75,8 +93,6 @@ public class Comentario implements Serializable , Auditable{
         this.comentario = comentario;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -101,5 +117,5 @@ public class Comentario implements Serializable , Auditable{
     public String toString() {
         return "py.com.palermo.curriculoadm.entities.Comentarios[ id=" + id + " ]";
     }
-    
+
 }

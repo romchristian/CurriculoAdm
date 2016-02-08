@@ -29,6 +29,12 @@ public class TipoDocumento implements Serializable, Auditable {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
+    public TipoDocumento() {
+        estado = Estado.ACTIVO;
+    }
+    
+    
+
     public Estado getEstado() {
         return estado;
     }

@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.entities.TipoDocumento;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
@@ -55,4 +56,15 @@ public class TipoDocumentoDAO implements ITipoDocumentoDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    @Override
+    public List<TipoDocumento> findAllActive() {
+        return abmService.getEM().createQuery("select obj from TipoDocumento obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<TipoDocumento> findAllActive(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
 }

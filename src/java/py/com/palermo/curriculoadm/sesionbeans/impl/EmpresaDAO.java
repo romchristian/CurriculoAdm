@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import py.com.palermo.curriculoadm.entities.Empresa;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEmpresaDAO;
@@ -55,4 +56,15 @@ public class EmpresaDAO implements IEmpresaDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    @Override
+    public List<Empresa> findAllActive() {
+        return abmService.getEM().createQuery("select obj from Empresa obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<Empresa> findAllActive(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
 }

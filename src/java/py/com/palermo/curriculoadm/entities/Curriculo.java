@@ -21,12 +21,9 @@ import javax.persistence.PostLoad;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Email;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -35,8 +32,6 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  */
 @Entity
 public class Curriculo implements Serializable, Auditable {
-
-    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,7 +69,7 @@ public class Curriculo implements Serializable, Auditable {
 
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReferenciaPersonal> referenciasPersonales;
-    
+
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienciaLaboral> experienciasLaborales;
 
@@ -91,11 +86,40 @@ public class Curriculo implements Serializable, Auditable {
     private String mesNac;
     private String anioNac;
 
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
     @Transient
     private Integer edad;
 
     @ManyToOne
     private Nacionalidad nacionalidad;
+
+    public Curriculo() {
+        estado = Estado.ACTIVO;
+        estadoCurriculo = EstadoCurriculo.NUEVO;
+    }
+
+    public String getEstadoColor() {
+
+        String R = "";
+        if (estadoCurriculo == null) {
+            estadoCurriculo = EstadoCurriculo.NUEVO;
+        }
+        switch (estadoCurriculo) {
+            case NUEVO:
+                R = "BlueBack";
+                break;
+            case PRESELECCIONADO:
+                R = "PurpleBack";
+                break;
+            case CONTRATADO:
+                R = "GreenBack";
+                break;
+        }
+
+        return R;
+    }
 
     @Override
     public Long getId() {
@@ -311,6 +335,14 @@ public class Curriculo implements Serializable, Auditable {
     }
 
     public Integer getEdad() {
+        if (anioNac != null && mesNac != null && diaNac != null) {
+            LocalDate birthdate = LocalDate.parse(anioNac + "-" + mesNac + "-" + diaNac,
+                    DateTimeFormat.forPattern("yyyy-MM-dd"));
+
+            LocalDate now = new LocalDate();
+            Years age = Years.yearsBetween(birthdate, now);
+            edad = age.getYears();
+        }
         return edad;
     }
 
@@ -318,7 +350,6 @@ public class Curriculo implements Serializable, Auditable {
         this.edad = edad;
     }
 
-   
     public Nacionalidad getNacionalidad() {
         return nacionalidad;
     }
@@ -327,16 +358,20 @@ public class Curriculo implements Serializable, Auditable {
         this.nacionalidad = nacionalidad;
     }
 
-    @PostLoad
-    public void postload() {
+    public List<ExperienciaLaboral> getExperienciasLaborales() {
+        return experienciasLaborales;
+    }
 
-        LocalDate birthdate = LocalDate.parse( anioNac+"-"+mesNac+"-"+diaNac,
-                DateTimeFormat.forPattern("yyyy-MM-dd"));
-       
-        LocalDate now = new LocalDate();
-        Years age = Years.yearsBetween(birthdate, now);
+    public void setExperienciasLaborales(List<ExperienciaLaboral> experienciasLaborales) {
+        this.experienciasLaborales = experienciasLaborales;
+    }
 
-        setEdad(edad);
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     @Override

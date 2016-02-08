@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import py.com.palermo.curriculoadm.entities.Area;
+import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.IAreaDAO;
@@ -52,6 +53,18 @@ public class AreaDAO implements IAreaDAO {
 
     @Override
     public List<Area> findAll(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public List<Area> findAllActive() {
+        return abmService.getEM().createQuery("select obj from Area obj WHERE OBJ.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<Area> findAllActive(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
 
