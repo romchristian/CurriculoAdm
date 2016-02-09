@@ -6,15 +6,13 @@
 package py.com.palermo.curriculoadm.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -22,20 +20,19 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Grupo implements Serializable, Auditable {
+public class Ciudad implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    
-    @ManyToMany(mappedBy = "grupos")
-    private List<Usuario> usuarios;
     @Enumerated(EnumType.STRING)
     private Estado estado;
+    @ManyToOne
+    private Departamento departamento;
 
-    public Grupo() {
+    public Ciudad() {
         estado = Estado.ACTIVO;
     }
 
@@ -63,12 +60,12 @@ public class Grupo implements Serializable, Auditable {
         this.nombre = nombre;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 
     @Override
@@ -81,10 +78,10 @@ public class Grupo implements Serializable, Auditable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Grupo)) {
+        if (!(object instanceof Ciudad)) {
             return false;
         }
-        Grupo other = (Grupo) object;
+        Ciudad other = (Ciudad) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +90,7 @@ public class Grupo implements Serializable, Auditable {
 
     @Override
     public String toString() {
-        return nombre;
+        return nombre + " - " + departamento.getNombre();
     }
 
 }

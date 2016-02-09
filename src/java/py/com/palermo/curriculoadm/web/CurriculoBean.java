@@ -79,8 +79,8 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
 
                 R.setReferenciasPersonales(refsPersonales);
             }
-            
-            if(R.getExperienciasLaborales() == null){
+
+            if (R.getExperienciasLaborales() == null) {
                 List<ExperienciaLaboral> expsLaborales = new ArrayList<>();
                 ExperienciaLaboral exp1 = new ExperienciaLaboral();
                 ExperienciaLaboral exp2 = new ExperienciaLaboral();
@@ -88,10 +88,10 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
                 exp2.setIndice(2);
                 exp1.setCurriculo(R);
                 exp2.setCurriculo(R);
-                
+
                 expsLaborales.add(exp1);
                 expsLaborales.add(exp2);
-                
+
                 R.setExperienciasLaborales(expsLaborales);
             }
         }
@@ -198,7 +198,7 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         }
     }
 
-    public void guardar() {
+    public String guardar() {
         if (file != null) {
             copyFile();
         }
@@ -208,26 +208,54 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         getActual().setFechaNacimiento(birthdate.toDate());
 
         edit();
+        return "/main/curriculo/listado";
     }
     
-    public String preseleccionar(){
+    
+    
+    public String guardar2() {
+        if (file != null) {
+            copyFile();
+        }
+
+        LocalDate birthdate = LocalDate.parse(getActual().getAnioNac() + "-" + getActual().getMesNac() + "-" + getActual().getDiaNac(),
+                DateTimeFormat.forPattern("yyyy-MM-dd"));
+        getActual().setFechaNacimiento(birthdate.toDate());
+
+        edit();
+        return "/confirmacion";
+    }
+
+    public String preseleccionar() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.PRESELECCIONADO);
         edit();
-        return "vista.xhtml?faces-redirect=true&id="+idActual;
+        return "vista.xhtml?faces-redirect=true&id=" + idActual;
     }
-    
-    public String contratar(){
+
+    public String contratar() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.CONTRATADO);
         edit();
-        return "vista.xhtml?faces-redirect=true&id="+idActual;
+        return "vista.xhtml?faces-redirect=true&id=" + idActual;
     }
-    
-    public String pasarANuevo(){
+
+    public String pasarANuevo() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.NUEVO);
         edit();
-        return "vista.xhtml?faces-redirect=true&id="+idActual;
+        return "vista.xhtml?faces-redirect=true&id=" + idActual;
+    }
+
+    public Long getCountNuevos() {
+        return ejb.countEstado(EstadoCurriculo.NUEVO);
+    }
+
+    public Long getCountPreseleccionado() {
+        return ejb.countEstado(EstadoCurriculo.PRESELECCIONADO);
+    }
+
+    public Long getCountContratado() {
+        return ejb.countEstado(EstadoCurriculo.CONTRATADO);
     }
 }

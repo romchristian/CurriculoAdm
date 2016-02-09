@@ -22,7 +22,7 @@
                             <p:message for="nombre"/>
 
                             <p:outputLabel value="Estado" for="estado" />
-                            <p:selectOneMenu value="#{estadoCivilBean.actual.estado}" id="estado" rendered="#{not(contexto == 'edicion')}">
+                            <p:selectOneMenu value="#{estadoCivilBean.actual.estado}" id="estado" rendered="#{(contexto == 'edicion')}">
                                 <f:selectItems value="#{productorEnums.obtEstados()}"/>
                             </p:selectOneMenu>
                             <h:outputText value="#{estadoCivilBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>

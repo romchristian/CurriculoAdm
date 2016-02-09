@@ -76,7 +76,7 @@ public class Autenticador implements Serializable {
         } catch (ServletException ex) {
             Logger.getLogger(Autenticador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "/main/index.xhtml?faces-redirect=true";
+        return "/main/curriculo/listado.xhtml?faces-redirect=true";
     }
 
     public String logout() throws IOException {
@@ -86,7 +86,7 @@ public class Autenticador implements Serializable {
             request.getSession(false).invalidate();
             request.logout();
             String projectPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(projectPath + "/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(projectPath + "/nuevo.xhtml");
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage("Logout failed."));
         }

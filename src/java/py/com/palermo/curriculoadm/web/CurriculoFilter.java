@@ -8,16 +8,16 @@ package py.com.palermo.curriculoadm.web;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import py.com.palermo.curriculoadm.entities.Area;
 import py.com.palermo.curriculoadm.entities.Curriculo;
 import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.entities.EstadoCivil;
+import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
 import py.com.palermo.curriculoadm.entities.EstadoNivelAcademico;
 import py.com.palermo.curriculoadm.entities.Nacionalidad;
 import py.com.palermo.curriculoadm.entities.NivelAcademico;
-import py.com.palermo.curriculoadm.entities.Sexo;
 import py.com.palermo.curriculoadm.entities.TipoDocumento;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
 
@@ -26,7 +26,7 @@ import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
  * @author christian.romero
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class CurriculoFilter implements Serializable {
 
     @EJB
@@ -36,8 +36,8 @@ public class CurriculoFilter implements Serializable {
     private Curriculo actual;
 
     //Filtros
-    private Integer rangoEdad1 = 20;
-    private Integer rangoEdad2 = 35;
+    private Integer rangoEdad1 = 18;
+    private Integer rangoEdad2 = 50;
 
     private NivelAcademico nivelAcademico;
     private EstadoNivelAcademico estadoNivelAcademico;
@@ -51,11 +51,31 @@ public class CurriculoFilter implements Serializable {
 
     private String tieneHijos;
     private String nombre;
+    private EstadoCurriculo estadoCurriculo;
+
+    //Param
+    private int estado;
 
     //Resultado
     private List<Curriculo> resultado;
 
     //Getter y Setter
+    public EstadoCurriculo getEstadoCurriculo() {
+        return estadoCurriculo;
+    }
+
+    public void setEstadoCurriculo(EstadoCurriculo estadoCurriculo) {
+        this.estadoCurriculo = estadoCurriculo;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
     public Curriculo getActual() {
         return actual;
     }
@@ -168,6 +188,28 @@ public class CurriculoFilter implements Serializable {
         this.resultado = resultado;
     }
 
+    public String cargaEstado() {
+        System.out.println("Estado Curriculo: " + estadoCurriculo);
+        if (estado > 0) {
+            switch (estado) {
+                case 1:
+                    estadoCurriculo = EstadoCurriculo.NUEVO;
+                    break;
+                case 2:
+                    estadoCurriculo = EstadoCurriculo.PRESELECCIONADO;
+                    break;
+                case 3:
+                    estadoCurriculo = EstadoCurriculo.CONTRATADO;
+                    break;
+            }
+
+            busca();
+
+        }
+
+        return null;
+    }
+
     private String filtroNombre() {
         String R = "";
         if (nombre != null && nombre.length() > 0) {
@@ -250,6 +292,15 @@ public class CurriculoFilter implements Serializable {
         return R;
     }
 
+    private String filtroEstadoCurriculo() {
+        String R = "";
+        if (estadoCurriculo != null) {
+            R = " AND (estadocurriculo = '" + estadoCurriculo.toString() + "' OR estadocurriculo is null)";
+        }
+
+        return R;
+    }
+
     private String filtroTieneHijos() {
         String R = "";
         if (tieneHijos != null) {
@@ -277,6 +328,7 @@ public class CurriculoFilter implements Serializable {
         sb.append(filtroNacionalidad());
         sb.append(filtroTieneHijos());
         sb.append(filtroSexo());
+        sb.append(filtroEstadoCurriculo());
 
         return sb.toString();
     }

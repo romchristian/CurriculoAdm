@@ -13,13 +13,16 @@
         <pv:menu>
 
             <p:submenu label="Curriculum" icon="fa fa-user">
-                <p:menuitem id="rm_main_curriculo_todos" value="Busqueda Avanzanda" icon="fa fa-cloud-download" outcome="/main/curriculo/listado" />
+                <p:menuitem id="rm_main_curriculo_todos" value="Busqueda Avanzanda" icon="fa fa-search" outcome="/main/curriculo/listado" />
+                <p:menuitem id="rm_main_curriculo_nuevo" value="Agregar Nuevo" icon="fa fa-plus" outcome="/main/curriculo/nuevo" />
             </p:submenu>
 
 
             <p:submenu label="Configuraciones" icon="fa fa-cog">
                 <p:menuitem id="rm_admin_empresa" value="Empresa" icon="fa fa-cog" outcome="/admin/empresa/listado"/>
                 <p:menuitem id="rm_admin_area" value="Área" icon="fa fa-cog" outcome="/admin/area/listado"/>
+                <p:menuitem id="rm_admin_departamento" value="Departamento" icon="fa fa-cog" outcome="/admin/departamento/listado"/>
+                <p:menuitem id="rm_admin_ciudad" value="Ciudad" icon="fa fa-cog" outcome="/admin/ciudad/listado"/>
                 <p:menuitem id="rm_admin_estadocivil" value="Estado Civil" icon="fa fa-cog" outcome="/admin/estadoCivil/listado"/>
                 <p:menuitem id="rm_admin_nacionalidad" value="Nacionalidad" icon="fa fa-cog" outcome="/admin/nacionalidad/listado"/>
                 <p:menuitem id="rm_admin_nivel" value="Nivel Académico" icon="fa fa-cog" outcome="/admin/nivelAcademico/listado"/>

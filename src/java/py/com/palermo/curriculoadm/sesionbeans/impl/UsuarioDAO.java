@@ -46,11 +46,12 @@ public class UsuarioDAO implements IUsuarioDAO {
         return abmService.find(id, Usuario.class);
     }
 
+    @Override
     public Usuario find(String login) {
         Usuario R = null;
 
         try {
-            R = (Usuario) abmService.getEM().createQuery("SELECT u FROM Usuario u WHERE u.usuario = :login ")
+            R = (Usuario) abmService.getEM().createQuery("SELECT u FROM Usuario u WHERE u.username = :login ")
                     .setParameter("login", login).getSingleResult();
         } catch (Exception e) {
         }

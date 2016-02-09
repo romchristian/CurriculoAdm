@@ -3,12 +3,10 @@
     <welcome-file-list>
         <welcome-file>nuevo.xhtml</welcome-file>
     </welcome-file-list>
-    
     <context-param>
         <param-name>uploadDirectory</param-name>
-        <param-value>C:\Users\cromero\Desktop\archivos\</param-value>
+        <param-value>/home/nandeparaguay/</param-value>
     </context-param>
-    
     <context-param>
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
         <param-value>server</param-value>
@@ -24,7 +22,6 @@
     <listener>
         <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
     </listener>
-    
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>py.com.palermo.curriculoadm.web.DownloadServlet</servlet-class>
@@ -89,4 +86,45 @@
         <extension>svg#fontawesomeregular</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+    <security-constraint>
+        <display-name>ConstraintAdmin</display-name>
+        <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <description>solo admin</description>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ConstraintConsultas</display-name>
+        <web-resource-collection>
+            <web-resource-name>Consultas</web-resource-name>
+            <description>solo consultas y creacion de curriculo</description>
+            <url-pattern>/main/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>admin</role-name>
+            <role-name>consultas</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>curriculoRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>consultas</role-name>
+    </security-role>
 </web-app>

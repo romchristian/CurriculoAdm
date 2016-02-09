@@ -221,6 +221,13 @@
                                                   label="Elegir Archivo"
                                                   update="panelAdjunto panelArchivo" auto="true" sizeLimit="2000000" allowTypes="/(\.|\/)(pdf|doc|docx)$/" />
                                 </div>
+
+                                <div class="ui-grid-col-10 TexAlCenter">
+                                    <p:outputPanel rendered="#{(empty curriculoBean.actual.adjunto)}" styleClass="TexAlCenter">
+                                        <i class="icon-info Leaden Fs26"/><span class="Leaden Fs18" style="margin-left: 20px">El tamaño máximo de archivo que puede adjuntar es de 2MB!</span>
+                                    </p:outputPanel>
+
+                                </div>
                             </div>
                         </div>
 
@@ -234,20 +241,25 @@
                                         <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">#{curriculoBean.actual.adjunto}</span></a>
                                     </p:outputPanel>
 
-                                  
+
                                 </div>
+
+
                             </div>
                         </div>
                     </p:outputPanel>
 
                     <div class="EmptyBox20"></div>
 
-
+                    
+                    
                     <div class="CardFooter">
                         <div class="ui-grid ui-grid-responsive">
                             <div class="ui-grid-row">
+
+
                                 <div class="ui-grid-col-2">
-                                    <p:commandButton value="Enviar" action="#{curriculoBean.guardar()}" styleClass="GreenButton" update="panelNivel panelArea panelExperienciaLaboral panelReferenciaLaboral panelReferenciaPersonal @(.panelDatos)"
+                                    <p:commandButton value="Enviar" action="#{curriculoBean.guardar2()}" styleClass="GreenButton" update="panelNivel panelArea panelExperienciaLaboral panelReferenciaLaboral panelReferenciaPersonal @(.panelDatos)"
                                                      icon="fa fa-send"/>
                                 </div>
                             </div>

@@ -5,18 +5,18 @@
 package py.com.palermo.curriculoadm.converters;
 
 import javax.faces.convert.FacesConverter;
-import py.com.palermo.curriculoadm.entities.Grupo;
+import py.com.palermo.curriculoadm.entities.Departamento;
 import py.com.palermo.curriculoadm.generico.ConverterGenerico;
 
 /**
  *
  * @author christian
  */
-@FacesConverter(forClass = Grupo.class,value = "grupoConverter")
-public class GrupoConverter extends ConverterGenerico<Grupo> {
+@FacesConverter(forClass = Departamento.class)
+public class DepartamentoConverter extends ConverterGenerico<Departamento> {
 
     @Override
     public String getBeanName() {
-        return "grupoBean";
+        return "departamentoBean";
     }
 }

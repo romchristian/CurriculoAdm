@@ -17,15 +17,15 @@
                     <p:outputPanel id="panel">
                         <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
                             <p:outputLabel value="Descripción" for="nombre" />
-                            <h:outputText value="#{nacionalidadBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
-                            <p:inputText value="#{nacionalidadBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                            <h:outputText value="#{departamentoBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
+                            <p:inputText value="#{departamentoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
                             <p:message for="nombre"/>
 
                             <p:outputLabel value="Estado" for="estado" />
-                            <p:selectOneMenu value="#{nacionalidadBean.actual.estado}" id="estado" rendered="#{(contexto == 'edicion')}">
+                            <p:selectOneMenu value="#{departamentoBean.actual.estado}" id="estado" rendered="#{(contexto == 'edicion')}">
                                 <f:selectItems value="#{productorEnums.obtEstados()}"/>
                             </p:selectOneMenu>
-                            <h:outputText value="#{nacionalidadBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>
+                            <h:outputText value="#{departamentoBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>
                             <p:message for="estado" rendered="#{not(contexto == 'edicion')}"/>
                         </h:panelGrid>  
                     </p:outputPanel>
@@ -33,12 +33,12 @@
                     <br/>
 
 
-                    <p:commandButton value="Crear" action="#{nacionalidadBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
-                    <p:commandButton value="Guardar" action="#{nacionalidadBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
-                    <p:commandButton value="Eliminar" action="#{nacionalidadBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
+                    <p:commandButton value="Crear" action="#{departamentoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
+                    <p:commandButton value="Guardar" action="#{departamentoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
+                    <p:commandButton value="Eliminar" action="#{departamentoBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
                     
                     <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
-                        <f:param name="id" value="#{nacionalidadBean.actual.id}"/>
+                        <f:param name="id" value="#{departamentoBean.actual.id}"/>
                     </p:button>
                     <p:button value="Atras"  styleClass="Fleft PurpleButton" outcome="listado"/>
                     <br/>

@@ -7,45 +7,100 @@
 
 
 
-    <div class="Container100 Responsive100" >
-        <div class="ContainerIndent">
-            <div class="Card ShadowEffect HeiAutoOnMobile">
-                <h2 class="CardTopic"><i class="fa fa-plus-square Fs25 Fleft MarRight10 "></i>#{titulo}</h2>
-                <div class="Separator"/>
-                <h:form>
+    <div class="Container100 ui-fluid">
+        <div class="Card">
 
-                    <p:outputPanel id="panel">
-                        <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
-                            <p:outputLabel value="Descripción" for="nombre" />
-                            <h:outputText value="#{usuarioBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
-                            <p:inputText value="#{usuarioBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
-                            <p:message for="nombre"/>
 
-                            <p:outputLabel value="Estado" for="estado" />
-                            <p:selectOneMenu value="#{usuarioBean.actual.estado}" id="estado" rendered="#{not(contexto == 'edicion')}">
-                                <f:selectItems value="#{productorEnums.obtEstados()}"/>
-                            </p:selectOneMenu>
-                            <h:outputText value="#{usuarioBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>
-                            <p:message for="estado" rendered="#{not(contexto == 'edicion')}"/>
-                        </h:panelGrid>  
+
+            <h:form id="formABM">
+
+                <p:growl autoUpdate="true"/>
+                <div class="CardTopic">
+                    <p:outputPanel styleClass="Fleft">
+                        <p:link outcome="listado"><i class="Leaden Fs16 fa fa-arrow-left"></i> <span class="Leaden Fs16 FontVoltRegular">Atras</span></p:link>
                     </p:outputPanel>
+                    <div class="EmptyBox20"></div>
+                    #{titulo}
+                </div>
 
-                    <br/>
+                <div class="Separator"></div>
+                <div class="EmptyBox20"></div>
+
+                <p:outputPanel id="panel">
+
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+
+                        <p:outputLabel value="Nombre y Apellido" for="nombre" />
+                        <h:outputText value="#{usuarioBean.actual.nombres}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{usuarioBean.actual.nombres}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="nombre"/>
 
 
-                    <p:commandButton value="Crear" action="#{usuarioBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
-                    <p:commandButton value="Guardar" action="#{usuarioBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
-                    <p:commandButton value="Eliminar" action="#{usuarioBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
 
-                    <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
-                        <f:param name="id" value="#{usuarioBean.actual.id}"/>
-                    </p:button>
-                    <p:button value="Atras"  styleClass="Fleft PurpleButton" outcome="listado"/>
-                    <br/>
+                        <p:outputLabel value="Usuario" for="usuario" />
+                        <h:outputText value="#{usuarioBean.actual.username}" rendered="#{(contexto == 'vista')}"/>
+                        <p:inputText value="#{usuarioBean.actual.username}" required="true" id="usuario" rendered="#{not(contexto == 'vista')}"/>
+                        <p:message for="usuario"/>
 
-                </h:form>
 
-            </div>
+                        <p:outputLabel value="Password" for="password" rendered="#{(contexto == 'creacion')}"/>
+                        <p:password placeholder="Password" value="#{usuarioBean.password1}"
+                                    required="true"
+                                    rendered="#{(contexto == 'creacion')}"
+                                    id="password"/>
+                        <p:message for="password" rendered="#{(contexto == 'creacion')}"/>
+
+
+                        <p:outputLabel value="Confirmar" for="repetirPassword"  rendered="#{(contexto == 'creacion')}"/>
+                        <p:password  placeholder="Repetir Password" value="#{usuarioBean.password2}"
+                                     rendered="#{(contexto == 'creacion')}"
+                                     required="true"
+                                     id="repetirPassword"/>
+                        <p:message for="repetirPassword" rendered="#{(contexto == 'creacion')}"/>
+
+
+                        <p:outputLabel value="Estado" for="estado" />
+                        <p:selectOneMenu value="#{usuarioBean.actual.estado}" id="estado" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{productorEnums.obtEstados()}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{usuarioBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>
+                        <p:message for="estado" />
+
+                        <p:outputLabel value="Permisos" for="permiso" rendered="#{not(contexto == 'vista')}"/>
+                        <p:selectManyCheckbox value="#{usuarioBean.actual.grupos}" id="permiso" rendered="#{not(contexto == 'vista')}" converter="grupoConverter">
+                            <f:selectItems value="#{grupoBean.itemsAvailableSelectMany}" var="g" itemValue="#{g}" itemLabel="#{g.nombre}"/>
+                        </p:selectManyCheckbox>
+                        <p:message for="permiso" rendered="#{not(contexto == 'vista')}"/>
+
+                    </p:panelGrid>
+
+
+                </p:outputPanel>
+
+
+                
+                <div class="CardFooter">
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
+                                <p:commandButton value="Crear" action="#{usuarioBean.create()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{(contexto == 'creacion')}"/>
+                                <p:commandButton value="Guardar" action="#{usuarioBean.edit()}" styleClass="Fleft BlueButton" update=":formABM:panel" rendered="#{(contexto == 'edicion')}"/>
+                                <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
+                                    <f:param name="id" value="#{usuarioBean.actual.id}"/>
+                                </p:button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </h:form>
+
         </div>
     </div>
 </ui:composition>

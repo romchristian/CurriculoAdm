@@ -6,7 +6,9 @@
 package py.com.palermo.curriculoadm.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,7 +16,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import py.com.palermo.curriculoadm.generico.Auditable;
+import py.com.palermo.curriculoadm.generico.Encryptador;
 
 /**
  *
@@ -22,9 +26,6 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  */
 @Entity
 public class Usuario implements Serializable, Auditable {
-
-    @ManyToMany(mappedBy = "usuarios")
-    private List<Grupo> grupos;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,6 +36,11 @@ public class Usuario implements Serializable, Auditable {
     private String password;
     @Enumerated(EnumType.STRING)
     private Estado estado;
+    @Transient
+    private String password2;
+
+    @ManyToMany
+    private List<Grupo> grupos;
 
     public Usuario() {
         estado = Estado.ACTIVO;
@@ -48,6 +54,7 @@ public class Usuario implements Serializable, Auditable {
         this.estado = estado;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -77,15 +84,26 @@ public class Usuario implements Serializable, Auditable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Encryptador.encrypta(password);
     }
 
     public List<Grupo> getGrupos() {
+        if (grupos == null) {
+            grupos = new ArrayList<>();
+        }
         return grupos;
     }
 
     public void setGrupos(List<Grupo> grupos) {
         this.grupos = grupos;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 
     @Override

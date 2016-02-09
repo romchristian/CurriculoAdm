@@ -6,15 +6,12 @@
 package py.com.palermo.curriculoadm.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -22,23 +19,22 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Grupo implements Serializable, Auditable {
+public class Departamento implements Serializable , Auditable{
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    
-    @ManyToMany(mappedBy = "grupos")
-    private List<Usuario> usuarios;
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    public Grupo() {
+    public Departamento() {
         estado = Estado.ACTIVO;
     }
 
+    
+    
     public Estado getEstado() {
         return estado;
     }
@@ -46,7 +42,7 @@ public class Grupo implements Serializable, Auditable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -63,14 +59,6 @@ public class Grupo implements Serializable, Auditable {
         this.nombre = nombre;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -81,10 +69,10 @@ public class Grupo implements Serializable, Auditable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Grupo)) {
+        if (!(object instanceof Departamento)) {
             return false;
         }
-        Grupo other = (Grupo) object;
+        Departamento other = (Departamento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

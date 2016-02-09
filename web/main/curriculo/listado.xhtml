@@ -8,6 +8,11 @@
 
     <ui:define name="content">
 
+        <f:metadata>
+            <f:viewParam name="estado" value="#{curriculoFilter.estado}"/>
+            <f:viewAction action="#{curriculoFilter.cargaEstado()}"/>
+        </f:metadata>
+
         <style type="text/css">
             .ui-panelgrid-cell .ui-grid-col-12{
                 padding-left : 0px!important;
@@ -99,6 +104,12 @@
                             <f:selectItems value="#{nacionalidadBean.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="Estado" for="estado"/>
+                        <p:selectOneMenu value="#{curriculoFilter.estadoCurriculo}" id="estado">
+                            <f:selectItems value="#{productorEnums.obtEstadosCurriculo()}"/>
+                        </p:selectOneMenu>
+
+                        <p:spacer/>
                         <p:commandButton value="Buscar" action="#{curriculoFilter.busca()}" update="resultado" icon="fa fa-search"/>
                     </p:panelGrid>
 

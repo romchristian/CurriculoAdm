@@ -12,6 +12,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
 import py.com.palermo.curriculoadm.entities.Curriculo;
 import py.com.palermo.curriculoadm.entities.Estado;
+import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
@@ -75,6 +76,19 @@ public class CurriculoDAO implements ICurriculoDAO {
         Query query = abmService.getEM().createNativeQuery("SELECT * FROM curriculo " + filters, Curriculo.class);
         List<Curriculo> items = (List<Curriculo>) query.getResultList();
         return items;
+    }
+
+    @Override
+    public Long countEstado(EstadoCurriculo estado) {
+
+        Long R = 0l;
+        try {
+            R = (Long) abmService.getEM().createQuery("SELECT COUNT(c.id) FROM Curriculo c WHERE c.estadoCurriculo = :estado")
+                    .setParameter("estado", estado).getSingleResult();
+        } catch (Exception e) {
+        }
+
+        return R;
     }
 
 }
