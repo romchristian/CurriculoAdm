@@ -81,7 +81,7 @@
 
 
 
-                        <p:outputLabel value="Teléfonos" for="telefonos" />
+                        <p:outputLabel value="Teléfonos" for="telefonos" styleClass="panelDatos"/>
                         <p:inputText value="#{curriculoBean.actual.telefonos}" required="true" id="telefonos" styleClass="panelDatos"/>
 
 
@@ -199,8 +199,8 @@
                             <ui:repeat value="#{curriculoBean.actual.referenciasPersonales}" var="r">
                                 <div class="ui-grid-row">
                                     <div class="ui-grid-col-2" style="margin-bottom: 10px"> <p:outputLabel value="Referencia #{r.indice}" for="contactoRP"/></div>
-                                    <div class="ui-grid-col-3" style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoNombre}" id="contactoRP" placeholder="Nombre Contacto"/></div>
-                                    <div class="ui-grid-col-3"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoTelefono}" placeholder="Teléfono Contacto"/></div>
+                                    <div class="ui-grid-col-3" style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoNombre}" id="contactoRP" placeholder="Nombre Contacto" required="true"/></div>
+                                    <div class="ui-grid-col-3"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{r.contactoTelefono}" placeholder="Teléfono Contacto" required="true"/></div>
                                 </div>
                             </ui:repeat>
                         </div>
@@ -213,18 +213,31 @@
                     <div class="EmptyBox20"></div>
 
                     <p:outputPanel id="panelAdjunto">
-                        <p:fileUpload fileUploadListener="#{curriculoBean.handleFileUpload}" mode="advanced"
-                                      rendered="#{(empty curriculoBean.actual.adjunto)}"
-                                      label="Elegir"
-                                      update="panelAdjunto panelArchivo" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(pdf|doc|docx)$/" 
-                                      styleClass="Wid30"/>
+                        <div class="ui-grid ui-grid-responsive">
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-2">
+                                    <p:fileUpload fileUploadListener="#{curriculoBean.handleFileUpload}" mode="advanced"
+                                                  rendered="#{(empty curriculoBean.actual.adjunto)}"
+                                                  label="Elegir Archivo"
+                                                  update="panelAdjunto panelArchivo" auto="true" sizeLimit="2000000" allowTypes="/(\.|\/)(pdf|doc|docx)$/" />
+                                </div>
+                            </div>
+                        </div>
+
                     </p:outputPanel>
                     <p:outputPanel id="panelArchivo">
 
-                        <p:outputPanel rendered="#{not(empty curriculoBean.actual.adjunto)}">
-                            <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">#{curriculoBean.actual.adjunto}</span></a>
-                        </p:outputPanel>
+                        <div class="ui-grid ui-grid-responsive">
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-2">
+                                    <p:outputPanel rendered="#{not(empty curriculoBean.actual.adjunto)}">
+                                        <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">#{curriculoBean.actual.adjunto}</span></a>
+                                    </p:outputPanel>
 
+                                  
+                                </div>
+                            </div>
+                        </div>
                     </p:outputPanel>
 
                     <div class="EmptyBox20"></div>
