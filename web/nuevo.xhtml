@@ -27,7 +27,7 @@
                         <p:inputText value="#{curriculoBean.actual.nombres}" required="true" id="nombre" styleClass="panelDatos"/>
 
 
-                        <p:outputLabel value="Sexo" for="sexo" styleClass="panelDatos"/>
+                        <p:outputLabel value="Genero" for="sexo" styleClass="panelDatos"/>
                         <p:selectOneMenu value="#{curriculoBean.actual.sexo}" required="true" id="sexo" styleClass="panelDatos">
                             <f:selectItems value="#{productorEnums.obtSexo()}"/>
                         </p:selectOneMenu>
@@ -177,7 +177,7 @@
                                 <div class="ui-grid-row">
                                     <div class="ui-grid-col-2" style="margin-bottom: 10px"> <p:outputLabel value="Referencia #{rl.indice}" for="empresaRL"/></div>
                                     <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.nombreEmpresa}" placeholder="Empresa" id="empresaRL"/></div>
-                                    <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.cargo}" placeholder="Cargo"/></div>
+                                    <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.cargo}" placeholder="Cargo del Contacto"/></div>
                                     <div class="ui-grid-col-2" style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.contactoNombre}" placeholder="Nombre Contacto"/></div>
                                     <div class="ui-grid-col-2"  style="padding-right: 5px;margin-bottom: 10px"><p:inputText value="#{rl.contactoTelefono}" placeholder="Teléfono Contacto"/></div>
                                 </div>
@@ -251,13 +251,15 @@
 
                     <div class="EmptyBox20"></div>
 
-                    
-                    
+
+
                     <div class="CardFooter">
                         <div class="ui-grid ui-grid-responsive">
                             <div class="ui-grid-row">
-
-
+                                <div class="ui-grid-col-2">
+                                    <p:captcha id="captcha"></p:captcha>
+                                </div>
+                                
                                 <div class="ui-grid-col-2">
                                     <p:commandButton value="Enviar" action="#{curriculoBean.guardar2()}" styleClass="GreenButton" update="panelNivel panelArea panelExperienciaLaboral panelReferenciaLaboral panelReferenciaPersonal @(.panelDatos)"
                                                      icon="fa fa-send"/>
