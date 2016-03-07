@@ -28,7 +28,7 @@
                         <p:outputPanel id="panelArchivo" styleClass="Fright">
 
                             <p:outputPanel rendered="#{not(empty curriculoBean.actual.adjunto)}">
-                                <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">Curriculum</span></a>
+                                <a href="#{request.contextPath}/DownloadServlet?nombre=#{curriculoBean.actual.nombreAdjunto}&amp;nombreCorto=#{curriculoBean.actual.nombres}-Curriculum"><i class="icon-paperclip Blue Fs20"/><span class="FontVoltBold Fs16 Blue">Ver Curriculum</span></a>
                             </p:outputPanel>
 
                             <p:outputPanel rendered="#{(empty curriculoBean.actual.adjunto)}">

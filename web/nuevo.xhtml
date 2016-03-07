@@ -14,6 +14,8 @@
 
                 <h:form>
 
+                    <p:growl id="mensajes" autoUpdate="true"/>
+
                     <div class="CardTopic">Datos Personales</div>
 
 
@@ -35,7 +37,7 @@
                         <p:outputLabel value="Estado Civil" for="estadoCivil" styleClass="panelDatos"/>
 
                         <p:selectOneMenu value="#{curriculoBean.actual.estadoCivil}" required="true" id="estadoCivil" styleClass="panelDatos">
-                            <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectMany}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Cantidad Hijos" for="cantidadHijos" styleClass="panelDatos"/>
@@ -69,7 +71,7 @@
                         <p:outputLabel value="Tipo Documento" for="tipoDocumento" styleClass="panelDatos"/>
 
                         <p:selectOneMenu value="#{curriculoBean.actual.tipoDocumento}" required="true" id="tipoDocumento" styleClass="panelDatos">
-                            <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectMany}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Documento" for="documento" styleClass="panelDatos"/>
@@ -91,7 +93,7 @@
                         <p:outputLabel value="Nacionalidad" for="nacionalidad" styleClass="panelDatos"/>
 
                         <p:selectOneMenu value="#{curriculoBean.actual.nacionalidad}" required="true" id="nacionalidad" styleClass="panelDatos">
-                            <f:selectItems value="#{nacionalidadBean.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{nacionalidadBean.itemsAvailableSelectMany}"/>
                         </p:selectOneMenu>
 
 
@@ -133,12 +135,12 @@
                         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
                             <p:outputLabel value="Nivel Académico" for="nivelAcademico"/>
                             <p:selectOneMenu value="#{curriculoBean.actual.nivelAcademico}" required="true" id="nivelAcademico">
-                                <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
+                                <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectMany}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Estado" for="estadoNivelAcademico"/>
                             <p:selectOneMenu value="#{curriculoBean.actual.estadoNivelAcademico}" required="true" id="estadoNivelAcademico">
-                                <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectOne}"/>
+                                <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectMany}"/>
                             </p:selectOneMenu>  
                         </p:panelGrid>
                     </p:outputPanel>
@@ -257,10 +259,9 @@
                         <div class="ui-grid ui-grid-responsive">
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-2">
-                                    <p:captcha id="captcha"></p:captcha>
-                                </div>
-                                
-                                <div class="ui-grid-col-2">
+                                    <p:captcha id="captcha" requiredMessage="Patrón Incorrecto" rendered="true"
+                                               language="es" ></p:captcha>
+                                    <div class="EmptyBox10"></div>
                                     <p:commandButton value="Enviar" action="#{curriculoBean.guardar2()}" styleClass="GreenButton" update="panelNivel panelArea panelExperienciaLaboral panelReferenciaLaboral panelReferenciaPersonal @(.panelDatos)"
                                                      icon="fa fa-send"/>
                                 </div>

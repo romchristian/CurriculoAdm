@@ -46,7 +46,7 @@ public class Curriculo implements Serializable, Auditable {
     @ManyToOne
     private EstadoCivil estadoCivil;
     private boolean tieneHijos;
-    private Integer cantidadHijos;
+    private Integer cantidadHijos = 0;
     private String direccion;
     private String telefonos;
     @Email
