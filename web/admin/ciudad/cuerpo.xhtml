@@ -14,16 +14,17 @@
                 <div class="Separator"/>
                 <h:form>
 
+                    <p:growl autoUpdate="true" id="mensajes"/>
                     <p:outputPanel id="panel">
                         <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
-                            
+
                             <p:outputLabel value="Departamento" for="departamento" />
                             <h:outputText value="#{ciudadBean.actual.departamento.nombre}" rendered="#{(contexto == 'vista')}"/>
                             <p:selectOneMenu value="#{ciudadBean.actual.departamento}"  rendered="#{not(contexto == 'vista')}" required="true" id="departamento">
                                 <f:selectItems value="#{departamentoBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
                             <p:message for="departamento"/>
-                            
+
                             <p:outputLabel value="Nombre" for="nombre" />
                             <h:outputText value="#{ciudadBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
                             <p:inputText value="#{ciudadBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
@@ -44,7 +45,7 @@
                     <p:commandButton value="Crear" action="#{ciudadBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
                     <p:commandButton value="Guardar" action="#{ciudadBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
                     <p:commandButton value="Eliminar" action="#{ciudadBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
-                    
+
                     <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
                         <f:param name="id" value="#{ciudadBean.actual.id}"/>
                     </p:button>

@@ -110,12 +110,12 @@
                     <p:outputPanel id="panelArea">
                         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
                             <p:outputLabel value="Empresa" for="empresa"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.empresa}" required="true" id="empresa">
+                            <p:selectOneMenu value="#{curriculoBean.actual.empresa}"  id="empresa">
                                 <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Area" for="area"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.area}" required="true" id="area">
+                            <p:selectOneMenu value="#{curriculoBean.actual.area}"  id="area">
                                 <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>

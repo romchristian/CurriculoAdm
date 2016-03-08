@@ -14,6 +14,7 @@
                 <div class="Separator"/>
                 <h:form>
 
+                    <p:growl autoUpdate="true" id="mensajes"/>
                     <p:outputPanel id="panel">
                         <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
                             <p:outputLabel value="Descripción" for="nombre" />
@@ -36,7 +37,7 @@
                     <p:commandButton value="Crear" action="#{nivelAcademicoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
                     <p:commandButton value="Guardar" action="#{nivelAcademicoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
                     <p:commandButton value="Eliminar" action="#{nivelAcademicoBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
-                    
+
                     <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
                         <f:param name="id" value="#{nivelAcademicoBean.actual.id}"/>
                     </p:button>

@@ -32,6 +32,7 @@
                                 <div class="EmptyBox10"></div>
 
                                 <h:form>
+                                    <p:growl autoUpdate="true" id="mensajes"/>
                                     <p:focus/>
                                     <p:inputText value="#{autenticador.username}" styleClass="Wid90" placeholder="Usuario"/>
                                     <div class="EmptyBox10"></div>
@@ -40,10 +41,10 @@
                                     <p:commandButton value="Acceder" icon="fa fa-unlock" styleClass="GreenButton" action="#{autenticador.login()}"/>
                                     <div class="SeparatorFull"></div>
                                 </h:form>
-                                
+
                             </div>
                         </div>
-                      
+
 
                     </div>
                 </div>

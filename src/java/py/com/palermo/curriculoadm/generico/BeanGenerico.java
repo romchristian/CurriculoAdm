@@ -14,8 +14,6 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
-
-
 /**
  *
  * @author christian
@@ -27,7 +25,6 @@ public abstract class BeanGenerico<T> implements Serializable {
     private long id;
 
     private T actual;
-   
 
     private List<T> listado = new ArrayList<>();
 
@@ -71,19 +68,19 @@ public abstract class BeanGenerico<T> implements Serializable {
     public abstract T getNuevo();
 
     public String create() {
-        
-        if (getEjb().create(getActual(),credencial.getUsuario().getUsername()) != null) {
+
+        if (getEjb().create(getActual(), credencial.getUsuario().getUsername()) != null) {
             JsfUtil.addSuccessMessage("Se creó exitosamente!");
             setActual(null);
             return "listado.xhtml?faces-redirect=true";
         } else {
-            return  null;
+            return null;
         }
 
     }
 
     public String edit() {
-        if (getEjb().edit(getActual(),credencial.getUsuario().getUsername()) == null) {
+        if (getEjb().edit(getActual(), credencial.getUsuario().getUsername()) == null) {
             JsfUtil.addErrorMessage("Otro usuario realizó una modificación sobre el mismo dato,y pruebe de nuevo");
             return null;
         }
@@ -94,9 +91,15 @@ public abstract class BeanGenerico<T> implements Serializable {
     }
 
     public String remove() {
-        getEjb().remove(getActual(),credencial.getUsuario().getUsername());
-        setActual(null);
-        JsfUtil.addSuccessMessage("Se removió exitosamente!");
+        try {
+            getEjb().remove(getActual(), credencial.getUsuario().getUsername());
+            setActual(null);
+            JsfUtil.addSuccessMessage("Se removió exitosamente!");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("No se pudo remover por que ya esta utilizado!.Prueba inactivar");
+            return null;
+        }
+
         return "listado.xhtml?faces-redirect=true";
     }
 
@@ -107,7 +110,7 @@ public abstract class BeanGenerico<T> implements Serializable {
     public List<T> findAll() {
         return getEjb().findAll();
     }
-    
+
     public List<T> findAllActive() {
         return getEjb().findAllActive();
     }
