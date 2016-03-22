@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.ejb.EJB;
@@ -24,6 +25,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+import py.com.palermo.curriculoadm.entities.Area;
 import py.com.palermo.curriculoadm.entities.Curriculo;
 import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
 import py.com.palermo.curriculoadm.entities.ExperienciaLaboral;
@@ -31,7 +33,9 @@ import py.com.palermo.curriculoadm.entities.ReferenciaLaboral;
 import py.com.palermo.curriculoadm.entities.ReferenciaPersonal;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
 import py.com.palermo.curriculoadm.generico.BeanGenerico;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.IAreaDAO;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEmpresaDAO;
 
 /**
  *
@@ -43,6 +47,11 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
 
     @EJB
     private ICurriculoDAO ejb;
+    @EJB
+    private IAreaDAO areaDAO;
+    @EJB
+    private IEmpresaDAO empresaDAO;
+
     private UploadedFile file;
 
     @Override
@@ -115,6 +124,29 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
 
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    public SelectItem[] getSelectItemsAreas() {
+
+        List<Area> listaAreas;
+        if (getActual().getEmpresa() == null) {
+            listaAreas = areaDAO.findAllSinEmpresa();
+
+        } else if (empresaDAO.tieneArea(getActual().getEmpresa())) {
+            listaAreas = areaDAO.findAllConEmpresa(getActual().getEmpresa());
+        } else {
+            listaAreas = areaDAO.findAllSinEmpresa();
+        }
+
+        SelectItem[] items = new SelectItem[listaAreas.size() + 1];
+        int i = 0;
+        items[0] = new SelectItem("", "Todas las areas");
+        i++;
+        for (Area a : listaAreas) {
+            items[i++] = new SelectItem(a, a.toString());
+        }
+
+        return items;
     }
 
     public SelectItem[] getSelectItemsDias() {
@@ -210,9 +242,7 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
         edit();
         return "/main/curriculo/listado";
     }
-    
-    
-    
+
     public String guardar2() {
         if (file != null) {
             copyFile();
@@ -229,6 +259,7 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     public String preseleccionar() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.PRESELECCIONADO);
+        getActual().setFechaSeleccionado(new Date());
         edit();
         return "vista.xhtml?faces-redirect=true&id=" + idActual;
     }
@@ -236,6 +267,7 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     public String contratar() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.CONTRATADO);
+        getActual().setFechaContratado(new Date());
         edit();
         return "vista.xhtml?faces-redirect=true&id=" + idActual;
     }
@@ -243,6 +275,8 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     public String pasarANuevo() {
         Long idActual = getActual().getId();
         getActual().setEstadoCurriculo(EstadoCurriculo.NUEVO);
+        getActual().setFechaSeleccionado(null);
+        getActual().setFechaContratado(null);
         edit();
         return "vista.xhtml?faces-redirect=true&id=" + idActual;
     }
@@ -258,4 +292,5 @@ public class CurriculoBean extends BeanGenerico<Curriculo> implements Serializab
     public Long getCountContratado() {
         return ejb.countEstado(EstadoCurriculo.CONTRATADO);
     }
+
 }

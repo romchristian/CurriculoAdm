@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import py.com.palermo.curriculoadm.entities.Area;
 import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.generico.ABMService;
@@ -66,5 +67,19 @@ public class EmpresaDAO implements IEmpresaDAO {
     @Override
     public List<Empresa> findAllActive(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public boolean tieneArea(Empresa empresa) {
+        boolean R = false;
+
+        List<Area> lista = abmService.getEM().createQuery("SELECT a from Area a WHERE a.empresa = :empresa")
+                .setParameter("empresa", empresa)
+                .getResultList();
+        if (lista != null && !lista.isEmpty()) {
+            R = true;
+        }
+
+        return R;
     }
 }

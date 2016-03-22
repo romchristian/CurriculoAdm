@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import py.com.palermo.curriculoadm.generico.Auditable;
 
 /**
@@ -19,7 +20,7 @@ import py.com.palermo.curriculoadm.generico.Auditable;
  * @author christian.romero
  */
 @Entity
-public class Area implements Serializable , Auditable{
+public class Area implements Serializable, Auditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,13 +29,21 @@ public class Area implements Serializable , Auditable{
     private String nombre;
     @Enumerated(EnumType.STRING)
     private Estado estado;
+    @ManyToOne
+    private Empresa empresa;
 
     public Area() {
         estado = Estado.ACTIVO;
     }
 
-    
-    
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
     public Estado getEstado() {
         return estado;
     }
@@ -42,7 +51,7 @@ public class Area implements Serializable , Auditable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-    
+
     public Long getId() {
         return id;
     }

@@ -32,6 +32,8 @@ public interface IEmpresaDAO extends AbstractDAO<Empresa> {
 
     @Override
     List<Empresa> findAll(String query, QueryParameter params);
+    
+    boolean tieneArea(Empresa empresa);
 
     @Override
     void remove(Empresa entity, String usuario);

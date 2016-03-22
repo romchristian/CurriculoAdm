@@ -94,9 +94,17 @@ public class Curriculo implements Serializable, Auditable {
     @ManyToOne
     private Nacionalidad nacionalidad;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaEnvio;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaSeleccionado;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaContratado;
+
     public Curriculo() {
         estado = Estado.ACTIVO;
         estadoCurriculo = EstadoCurriculo.NUEVO;
+        fechaEnvio = new Date();
     }
 
     public String getEstadoColor() {
@@ -371,6 +379,30 @@ public class Curriculo implements Serializable, Auditable {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public Date getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(Date fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
+    }
+
+    public Date getFechaSeleccionado() {
+        return fechaSeleccionado;
+    }
+
+    public void setFechaSeleccionado(Date fechaSeleccionado) {
+        this.fechaSeleccionado = fechaSeleccionado;
+    }
+
+    public Date getFechaContratado() {
+        return fechaContratado;
+    }
+
+    public void setFechaContratado(Date fechaContratado) {
+        this.fechaContratado = fechaContratado;
     }
 
     @Override

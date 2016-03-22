@@ -12,11 +12,15 @@ and open the template in the editor.
 }
 
 .BlueLink {
-  color: #29506b;
+    color: #29506b;
 }
 
 .fa-rotate-45 {
-   -moz-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
     -webkit-transform:rotate(45deg);
     transform:rotate(45deg);
 }
+/*
+.ui-selectonemenu .ui-selectonemenu-trigger, .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger {
+    background-color:#ff9933!important;
+}*/

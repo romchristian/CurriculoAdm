@@ -8,6 +8,7 @@ package py.com.palermo.curriculoadm.sesionbeans.interfaces;
 import java.util.List;
 import javax.ejb.Local;
 import py.com.palermo.curriculoadm.entities.Area;
+import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 
@@ -32,6 +33,10 @@ public interface IAreaDAO extends AbstractDAO<Area> {
 
     @Override
     List<Area> findAll(String query, QueryParameter params);
+
+    List<Area> findAllSinEmpresa();
+
+    List<Area> findAllConEmpresa(Empresa empresa);
 
     @Override
     void remove(Area entity, String usuario);

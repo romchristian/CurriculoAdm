@@ -17,6 +17,13 @@
                     <p:growl autoUpdate="true" id="mensajes"/>
                     <p:outputPanel id="panel">
                         <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
+                            <p:outputLabel value="Empresa" for="empresa" />
+                            <h:outputText value="#{areaBean.actual.empresa != null ? areaBean.actual.empresa.nombre:''}" rendered="#{(contexto == 'vista')}"/>
+                            <p:selectOneMenu value="#{areaBean.actual.empresa}" id="empresa" rendered="#{not(contexto == 'vista')}">
+                                <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:message for="empresa"/>
+                            
                             <p:outputLabel value="Descripción" for="nombre" />
                             <h:outputText value="#{areaBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
                             <p:inputText value="#{areaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>

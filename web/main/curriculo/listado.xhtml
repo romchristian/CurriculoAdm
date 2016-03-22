@@ -126,7 +126,11 @@
                                  selectionMode="single">
 
 
-
+                        <p:column headerText="Fecha Envio">
+                            <h:outputText value="#{e.fechaEnvio}">
+                                <f:convertDateTime pattern="#{formato.patronFecha}"/>
+                            </h:outputText>
+                        </p:column>
 
                         <p:column headerText="Nombre">
                             <p:link outcome="vista" value="#{e.nombres}">
