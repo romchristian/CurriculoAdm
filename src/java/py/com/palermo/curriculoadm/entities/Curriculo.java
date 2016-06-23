@@ -48,6 +48,14 @@ public class Curriculo implements Serializable, Auditable {
     private Integer cantidadHijos = 0;
     private String direccion;
     private String telefonos;
+
+    @ManyToOne
+    private Departamento departamento;
+    @ManyToOne
+    private Ciudad ciudad;
+    @ManyToOne
+    private Localidad localidad;
+
     @Email
     private String email;
     private String directoryUUID;
@@ -56,6 +64,10 @@ public class Curriculo implements Serializable, Auditable {
 
     @ManyToOne
     private Area area;
+    @ManyToOne
+    private Experiencia experiencia;
+    @ManyToOne
+    private Estudio estudio;
     @ManyToOne
     private Empresa empresa;
     @ManyToOne
@@ -403,6 +415,46 @@ public class Curriculo implements Serializable, Auditable {
 
     public void setFechaContratado(Date fechaContratado) {
         this.fechaContratado = fechaContratado;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
+
+    public Experiencia getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Experiencia experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public Estudio getEstudio() {
+        return estudio;
+    }
+
+    public void setEstudio(Estudio estudio) {
+        this.estudio = estudio;
     }
 
     @Override

@@ -12,6 +12,8 @@ import javax.ejb.TransactionAttributeType;
 import py.com.palermo.curriculoadm.entities.Area;
 import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.entities.Estado;
+import py.com.palermo.curriculoadm.entities.Estudio;
+import py.com.palermo.curriculoadm.entities.Experiencia;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEmpresaDAO;
@@ -74,6 +76,34 @@ public class EmpresaDAO implements IEmpresaDAO {
         boolean R = false;
 
         List<Area> lista = abmService.getEM().createQuery("SELECT a from Area a WHERE a.empresa = :empresa")
+                .setParameter("empresa", empresa)
+                .getResultList();
+        if (lista != null && !lista.isEmpty()) {
+            R = true;
+        }
+
+        return R;
+    }
+
+    @Override
+    public boolean tieneEstudio(Empresa empresa) {
+        boolean R = false;
+
+        List<Estudio> lista = abmService.getEM().createQuery("SELECT e from Estudio e WHERE e.empresa = :empresa")
+                .setParameter("empresa", empresa)
+                .getResultList();
+        if (lista != null && !lista.isEmpty()) {
+            R = true;
+        }
+
+        return R;
+    }
+
+    @Override
+    public boolean tieneExperiencia(Empresa empresa) {
+        boolean R = false;
+
+        List<Experiencia> lista = abmService.getEM().createQuery("SELECT e from Experiencia e WHERE e.empresa = :empresa")
                 .setParameter("empresa", empresa)
                 .getResultList();
         if (lista != null && !lista.isEmpty()) {

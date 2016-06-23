@@ -7,6 +7,7 @@ package py.com.palermo.curriculoadm.sesionbeans.interfaces;
 
 import java.util.List;
 import javax.ejb.Local;
+import py.com.palermo.curriculoadm.entities.Estudio;
 import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
@@ -16,30 +17,28 @@ import py.com.palermo.curriculoadm.generico.QueryParameter;
  * @author Acer
  */
 @Local
-public interface IEmpresaDAO extends AbstractDAO<Empresa> {
+public interface IEstudioDAO extends AbstractDAO<Estudio> {
 
     @Override
-    Empresa create(Empresa entity, String usuario);
+    Estudio create(Estudio entity, String usuario);
 
     @Override
-    Empresa edit(Empresa entity, String usuario);
+    Estudio edit(Estudio entity, String usuario);
 
     @Override
-    Empresa find(Object id);
+    Estudio find(Object id);
 
     @Override
-    List<Empresa> findAll();
+    List<Estudio> findAll();
 
     @Override
-    List<Empresa> findAll(String query, QueryParameter params);
-    
-    boolean tieneArea(Empresa empresa);
-    
-    boolean tieneEstudio(Empresa empresa);
-    
-    boolean tieneExperiencia(Empresa empresa);
+    List<Estudio> findAll(String query, QueryParameter params);
+
+    List<Estudio> findAllSinEmpresa();
+
+    List<Estudio> findAllConEmpresa(Empresa empresa);
 
     @Override
-    void remove(Empresa entity, String usuario);
+    void remove(Estudio entity, String usuario);
 
 }

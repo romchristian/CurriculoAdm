@@ -96,6 +96,25 @@
                             <f:selectItems value="#{nacionalidadBean.itemsAvailableSelectMany}"/>
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="Depatamento" for="departamento" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoBean.actual.departamento}" required="true" id="departamento" styleClass="panelDatos">
+                            <f:selectItems value="#{departamentoBean.itemsAvailableSelectMany}"/>
+                            <p:ajax process="@this" update="ciudad localidad"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Ciudad" for="ciudad" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoBean.actual.ciudad}"  id="ciudad" styleClass="panelDatos">
+                            <f:selectItems value="#{curriculoBean.selectItemsCiudades}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Localidad" for="localidad" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoBean.actual.localidad}"  id="localidad" styleClass="panelDatos">
+                            <f:selectItems value="#{curriculoBean.selectItemsLocalidades}"/>
+                        </p:selectOneMenu>
+
 
                     </p:panelGrid>
 
@@ -112,11 +131,11 @@
                             <p:outputLabel value="Empresa" for="empresa"/>
                             <p:selectOneMenu value="#{curriculoBean.actual.empresa}"  id="empresa">
                                 <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
-                                <p:ajax process="@this" update="area"/>
+                                <p:ajax process="@this" update="@(.filtradoPorEmpresa)"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Area" for="area"/>
-                            <p:selectOneMenu value="#{curriculoBean.actual.area}"  id="area">
+                            <p:selectOneMenu value="#{curriculoBean.actual.area}"  id="area" styleClass="filtradoPorEmpresa">
                                 <f:selectItems value="#{curriculoBean.selectItemsAreas}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
@@ -143,6 +162,31 @@
                             <p:selectOneMenu value="#{curriculoBean.actual.estadoNivelAcademico}" required="true" id="estadoNivelAcademico">
                                 <f:selectItems value="#{estadoNivelAcademicoBean.itemsAvailableSelectMany}"/>
                             </p:selectOneMenu>  
+                        </p:panelGrid>
+                    </p:outputPanel>
+
+
+                    <div class="EmptyBox20"></div>
+
+
+
+                    <div class="CardTopic">Estudios y Experiencias Específicas</div>
+
+                    <div class="Separator"></div>
+
+                    <div class="EmptyBox20"></div>
+
+                    <p:outputPanel id="panelEstudios">
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                            <p:outputLabel value="Estudio" for="estudio"/>
+                            <p:selectOneMenu value="#{curriculoBean.actual.estudio}"  id="estudio" styleClass="filtradoPorEmpresa">
+                                <f:selectItems value="#{curriculoBean.selectItemsEstudios}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Experiencia" for="experiencia"/>
+                            <p:selectOneMenu value="#{curriculoBean.actual.estudio}" id="experiencia" styleClass="filtradoPorEmpresa">
+                                <f:selectItems value="#{curriculoBean.selectItemsExperiencias}"/>
+                            </p:selectOneMenu>
                         </p:panelGrid>
                     </p:outputPanel>
 

@@ -53,13 +53,52 @@
                         <p:outputLabel value="Empresa" for="empresa"/>
                         <p:selectOneMenu value="#{curriculoFilter.empresa}" id="empresa">
                             <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                            <p:ajax process="@this" update="@(.filtradoPorEmpresa)"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Area" for="area"/>
-                        <p:selectOneMenu value="#{curriculoFilter.area}" id="area">
+                        <p:selectOneMenu value="#{curriculoFilter.area}" id="area" styleClass="filtradoPorEmpresa">
                             <f:selectItems value="#{areaBean.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="Estudio" for="estudio"/>
+                        <p:selectOneMenu value="#{curriculoFilter.estudio}"  id="estudio" styleClass="filtradoPorEmpresa">
+                            <f:selectItems value="#{curriculoFilter.selectItemsEstudios}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Experiencia" for="experiencia"/>
+                        <p:selectOneMenu value="#{curriculoFilter.estudio}" id="experiencia" styleClass="filtradoPorEmpresa">
+                            <f:selectItems value="#{curriculoFilter.selectItemsExperiencias}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel value="Depatamento" for="departamento" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoFilter.departamento}"  id="departamento" styleClass="panelDatos">
+                            <f:selectItems value="#{departamentoBean.itemsAvailableSelectOne}"/>
+                            <p:ajax process="@this" update="ciudad localidad"/>
+                        </p:selectOneMenu>
+
+                        
+                        <p:spacer/>
+                        <p:spacer/>
+                        
+                        <p:outputLabel value="Ciudad" for="ciudad" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoFilter.ciudad}"  id="ciudad" styleClass="panelDatos">
+                            <f:selectItems value="#{curriculoFilter.selectItemsCiudades}"/>
+                        </p:selectOneMenu>
+                        
+                        
+
+                        <p:outputLabel value="Localidad" for="localidad" styleClass="panelDatos"/>
+
+                        <p:selectOneMenu value="#{curriculoFilter.localidad}"  id="localidad" styleClass="panelDatos">
+                            <f:selectItems value="#{curriculoFilter.selectItemsLocalidades}"/>
+                        </p:selectOneMenu>
+
+                        
+                        
                         <p:outputLabel value="Nivel Académico" for="nivelAcademico"/>
                         <p:selectOneMenu value="#{curriculoFilter.nivelAcademico}" id="nivelAcademico">
                             <f:selectItems value="#{nivelAcademicoBean.itemsAvailableSelectOne}"/>
@@ -109,6 +148,7 @@
                             <f:selectItems value="#{productorEnums.obtEstadosCurriculo()}"/>
                         </p:selectOneMenu>
 
+                        <p:spacer/>
                         <p:spacer/>
                         <p:commandButton value="Buscar" action="#{curriculoFilter.busca()}" update="resultado" icon="fa fa-search"/>
                     </p:panelGrid>

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <div class="Container100 Responsive100" >
+        <div class="ContainerIndent">
+            <div class="Card ShadowEffect HeiAutoOnMobile">
+                <h2 class="CardTopic"><i class="fa fa-plus-square Fs25 Fleft MarRight10 "></i>#{titulo}</h2>
+                <div class="Separator"/>
+                <h:form>
+
+                    <p:growl autoUpdate="true" id="mensajes"/>
+                    <p:outputPanel id="panel">
+                        <h:panelGrid columns="3" columnClasses="gridColumn1,gridColumn2,gridColumn2" >
+                            <p:outputLabel value="Empresa" for="empresa" />
+                            <h:outputText value="#{experienciaBean.actual.empresa != null ? experienciaBean.actual.empresa.nombre:''}" rendered="#{(contexto == 'vista')}"/>
+                            <p:selectOneMenu value="#{experienciaBean.actual.empresa}" id="empresa" rendered="#{not(contexto == 'vista')}">
+                                <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:message for="empresa"/>
+                            
+                            <p:outputLabel value="Descripción" for="nombre" />
+                            <h:outputText value="#{experienciaBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
+                            <p:inputText value="#{experienciaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                            <p:message for="nombre"/>
+
+                            <p:outputLabel value="Estado" for="estado" />
+                            <p:selectOneMenu value="#{experienciaBean.actual.estado}" id="estado" rendered="#{(contexto == 'edicion')}">
+                                <f:selectItems value="#{productorEnums.obtEstados()}"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="#{experienciaBean.actual.estado}" rendered="#{(contexto == 'vista')}"/>
+                            <p:message for="estado" rendered="#{not(contexto == 'edicion')}"/>
+                        </h:panelGrid>  
+                    </p:outputPanel>
+
+                    <br/>
+
+
+                    <p:commandButton value="Crear" action="#{experienciaBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
+                    <p:commandButton value="Guardar" action="#{experienciaBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
+                    <p:commandButton value="Eliminar" action="#{experienciaBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
+                    
+                    <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
+                        <f:param name="id" value="#{experienciaBean.actual.id}"/>
+                    </p:button>
+                    <p:button value="Atras"  styleClass="Fleft PurpleButton" outcome="listado"/>
+                    <br/>
+
+                </h:form>
+
+            </div>
+        </div>
+    </div>
+</ui:composition>
+

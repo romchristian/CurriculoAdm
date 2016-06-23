@@ -6,31 +6,55 @@
 package py.com.palermo.curriculoadm.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import py.com.palermo.curriculoadm.entities.Area;
+import py.com.palermo.curriculoadm.entities.Ciudad;
 import py.com.palermo.curriculoadm.entities.Curriculo;
+import py.com.palermo.curriculoadm.entities.Departamento;
 import py.com.palermo.curriculoadm.entities.Empresa;
 import py.com.palermo.curriculoadm.entities.EstadoCivil;
 import py.com.palermo.curriculoadm.entities.EstadoCurriculo;
 import py.com.palermo.curriculoadm.entities.EstadoNivelAcademico;
+import py.com.palermo.curriculoadm.entities.Estudio;
+import py.com.palermo.curriculoadm.entities.Experiencia;
+import py.com.palermo.curriculoadm.entities.Localidad;
 import py.com.palermo.curriculoadm.entities.Nacionalidad;
 import py.com.palermo.curriculoadm.entities.NivelAcademico;
 import py.com.palermo.curriculoadm.entities.TipoDocumento;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICiudadDAO;
 import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICurriculoDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEmpresaDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.IEstudioDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.IExperienciaDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.ILocalidadDAO;
 
 /**
  *
  * @author christian.romero
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class CurriculoFilter implements Serializable {
 
     @EJB
     private ICurriculoDAO dao;
+
+    @EJB
+    private ICiudadDAO ciudadDAO;
+
+    @EJB
+    private ILocalidadDAO localidadDAO;
+    @EJB
+    private IExperienciaDAO experienciaDAO;
+    @EJB
+    private IEstudioDAO estudioDAO;
+    @EJB
+    private IEmpresaDAO empresaDAO;
 
     //actual seleccionado
     private Curriculo actual;
@@ -47,6 +71,11 @@ public class CurriculoFilter implements Serializable {
     private String sexo;
     private Empresa empresa;
     private Area area;
+    private Estudio estudio;
+    private Experiencia experiencia;
+    private Departamento departamento;
+    private Ciudad ciudad;
+    private Localidad localidad;
     private TipoDocumento tipoDocumento;
 
     private String tieneHijos;
@@ -188,6 +217,54 @@ public class CurriculoFilter implements Serializable {
         this.resultado = resultado;
     }
 
+    public ICurriculoDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(ICurriculoDAO dao) {
+        this.dao = dao;
+    }
+
+    public Estudio getEstudio() {
+        return estudio;
+    }
+
+    public void setEstudio(Estudio estudio) {
+        this.estudio = estudio;
+    }
+
+    public Experiencia getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Experiencia experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
+
     public String cargaEstado() {
         System.out.println("Estado Curriculo: " + estadoCurriculo);
         if (estado > 0) {
@@ -213,7 +290,7 @@ public class CurriculoFilter implements Serializable {
     private String filtroNombre() {
         String R = "";
         if (nombre != null && nombre.length() > 0) {
-            R = " AND nombres like '%" + nombre + "%' ";
+            R = " AND upper(nombres) like '%" + nombre.toUpperCase() + "%' ";
         }
 
         return R;
@@ -251,6 +328,51 @@ public class CurriculoFilter implements Serializable {
         String R = "";
         if (area != null) {
             R = " AND area_id = " + area.getId() + " ";
+        }
+
+        return R;
+    }
+
+    private String filtroEstudio() {
+        String R = "";
+        if (estudio != null) {
+            R = " AND estudio_id = " + estudio.getId() + " ";
+        }
+
+        return R;
+    }
+
+    private String filtroExperiencia() {
+        String R = "";
+        if (experiencia != null) {
+            R = " AND experiencia_id = " + experiencia.getId() + " ";
+        }
+
+        return R;
+    }
+
+    private String filtroDepartamento() {
+        String R = "";
+        if (departamento != null) {
+            R = " AND departamento_id = " + departamento.getId() + " ";
+        }
+
+        return R;
+    }
+
+    private String filtroCiudad() {
+        String R = "";
+        if (ciudad != null) {
+            R = " AND ciudad_id = " + ciudad.getId() + " ";
+        }
+
+        return R;
+    }
+
+    private String filtroLocalidad() {
+        String R = "";
+        if (localidad != null) {
+            R = " AND localidad_id = " + localidad.getId() + " ";
         }
 
         return R;
@@ -329,12 +451,103 @@ public class CurriculoFilter implements Serializable {
         sb.append(filtroTieneHijos());
         sb.append(filtroSexo());
         sb.append(filtroEstadoCurriculo());
+        sb.append(filtroDepartamento());
+        sb.append(filtroCiudad());
+        sb.append(filtroLocalidad());
+        sb.append(filtroEstudio());
+        sb.append(filtroExperiencia());
 
         return sb.toString();
     }
 
     public void busca() {
         resultado = dao.findAllFilter(construyeFiltro());
+    }
+
+    public SelectItem[] getSelectItemsCiudades() {
+
+        List<Ciudad> listaCiudades;
+        if (getActual() != null && getActual().getDepartamento() != null) {
+            listaCiudades = ciudadDAO.findAllActivePorDepartamento(getActual().getDepartamento());
+        } else {
+            listaCiudades = new ArrayList<>();
+        }
+
+        SelectItem[] items = new SelectItem[listaCiudades.size() + 1];
+        int i = 0;
+        items[0] = new SelectItem("", "Ninguna");
+        i++;
+        for (Ciudad c : listaCiudades) {
+            items[i++] = new SelectItem(c, c.toString());
+        }
+
+        return items;
+    }
+
+    public SelectItem[] getSelectItemsLocalidades() {
+
+        List<Localidad> listaLocalidades;
+        if (getActual() != null && getActual().getDepartamento() != null) {
+            listaLocalidades = localidadDAO.findAllActivePorDepartamento(getActual().getDepartamento());
+        } else {
+            listaLocalidades = new ArrayList<>();
+        }
+
+        SelectItem[] items = new SelectItem[listaLocalidades.size() + 1];
+        int i = 0;
+        items[0] = new SelectItem("", "Ninguna");
+        i++;
+        for (Localidad l : listaLocalidades) {
+            items[i++] = new SelectItem(l, l.toString());
+        }
+
+        return items;
+    }
+
+    public SelectItem[] getSelectItemsExperiencias() {
+
+        List<Experiencia> listaExperiencias;
+        if (empresa == null) {
+            listaExperiencias = experienciaDAO.findAllSinEmpresa();
+
+        } else if (empresaDAO.tieneExperiencia(empresa)) {
+            listaExperiencias = experienciaDAO.findAllConEmpresa(empresa);
+        } else {
+            listaExperiencias = experienciaDAO.findAllSinEmpresa();
+        }
+
+        SelectItem[] items = new SelectItem[listaExperiencias.size() + 1];
+        int i = 0;
+        items[0] = new SelectItem("", "Ninguna");
+        i++;
+        for (Experiencia e : listaExperiencias) {
+            items[i++] = new SelectItem(e, e.toString());
+        }
+
+        return items;
+    }
+
+    public SelectItem[] getSelectItemsEstudios() {
+
+        List<Estudio> listaEstudios;
+        if (empresa == null) {
+            listaEstudios = estudioDAO.findAllSinEmpresa();
+
+        } else if (empresaDAO.tieneEstudio(empresa)) {
+            listaEstudios = estudioDAO.findAllConEmpresa(empresa);
+        } else {
+            listaEstudios = estudioDAO.findAllSinEmpresa();
+        }
+
+        SelectItem[] items = new SelectItem[listaEstudios.size() + 1];
+        int i = 0;
+        items[0] = new SelectItem("", "Niguno");
+        i++;
+        for (Estudio e : listaEstudios) {
+            items[i++] = new SelectItem(e, e.toString());
+        }
+
+        return items;
     }
 
 }

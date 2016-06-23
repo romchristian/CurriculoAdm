@@ -11,10 +11,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import py.com.palermo.curriculoadm.entities.Ciudad;
 import py.com.palermo.curriculoadm.entities.Departamento;
+import py.com.palermo.curriculoadm.entities.Localidad;
 import py.com.palermo.curriculoadm.entities.Estado;
 import py.com.palermo.curriculoadm.generico.ABMService;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
-import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICiudadDAO;
+import py.com.palermo.curriculoadm.sesionbeans.interfaces.ILocalidadDAO;
 
 
 /*
@@ -22,59 +23,59 @@ import py.com.palermo.curriculoadm.sesionbeans.interfaces.ICiudadDAO;
  */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class CiudadDAO implements ICiudadDAO {
+public class LocalidadDAO implements ILocalidadDAO {
 
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
 
     @Override
-    public Ciudad create(Ciudad entity, String usuario) {
+    public Localidad create(Localidad entity, String usuario) {
         return abmService.create(entity, usuario);
     }
 
     @Override
-    public Ciudad edit(Ciudad entity, String usuario) {
+    public Localidad edit(Localidad entity, String usuario) {
         return abmService.update(entity, usuario);
     }
 
     @Override
-    public void remove(Ciudad entity, String usuario) {
+    public void remove(Localidad entity, String usuario) {
         abmService.delete(entity, usuario);
     }
 
     @Override
-    public Ciudad find(Object id) {
-        return abmService.find(id, Ciudad.class);
+    public Localidad find(Object id) {
+        return abmService.find(id, Localidad.class);
     }
 
     @Override
-    public List<Ciudad> findAll() {
-        return abmService.getEM().createQuery("select obj from Ciudad obj").getResultList();
+    public List<Localidad> findAll() {
+        return abmService.getEM().createQuery("select obj from Localidad obj").getResultList();
     }
 
     @Override
-    public List<Ciudad> findAll(String query, QueryParameter params) {
+    public List<Localidad> findAll(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
 
     @Override
-    public List<Ciudad> findAllActive() {
-        return abmService.getEM().createQuery("select obj from Ciudad obj WHERE OBJ.estado = :estado")
+    public List<Localidad> findAllActive() {
+        return abmService.getEM().createQuery("select obj from Localidad obj WHERE OBJ.estado = :estado")
                 .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
-    
+
     
     @Override
-    public List<Ciudad> findAllActivePorDepartamento(Departamento d ) {
-        return abmService.getEM().createQuery("select obj from Ciudad obj WHERE OBJ.estado = :estado AND OBJ.departamento = :dep")
+    public List<Localidad> findAllActivePorDepartamento(Departamento d ) {
+        return abmService.getEM().createQuery("select obj from Localidad obj WHERE OBJ.estado = :estado AND OBJ.departamento = :dep")
                 .setParameter("estado", Estado.ACTIVO)
                 .setParameter("dep", d)
                 .getResultList();
     }
-
+    
     @Override
-    public List<Ciudad> findAllActive(String query, QueryParameter params) {
+    public List<Localidad> findAllActive(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
 

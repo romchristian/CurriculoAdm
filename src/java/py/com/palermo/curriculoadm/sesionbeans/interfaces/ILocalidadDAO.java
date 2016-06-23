@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import py.com.palermo.curriculoadm.entities.Ciudad;
 import py.com.palermo.curriculoadm.entities.Departamento;
+import py.com.palermo.curriculoadm.entities.Localidad;
 import py.com.palermo.curriculoadm.generico.AbstractDAO;
 import py.com.palermo.curriculoadm.generico.QueryParameter;
 
@@ -17,28 +18,26 @@ import py.com.palermo.curriculoadm.generico.QueryParameter;
  * @author Acer
  */
 @Local
-public interface ICiudadDAO extends AbstractDAO<Ciudad> {
+public interface ILocalidadDAO extends AbstractDAO<Localidad> {
 
     @Override
-    Ciudad create(Ciudad entity, String usuario);
+    Localidad create(Localidad entity, String usuario);
 
     @Override
-    Ciudad edit(Ciudad entity, String usuario);
+    Localidad edit(Localidad entity, String usuario);
 
     @Override
-    Ciudad find(Object id);
+    Localidad find(Object id);
 
     @Override
-    List<Ciudad> findAll();
+    List<Localidad> findAll();
 
     @Override
-    List<Ciudad> findAll(String query, QueryParameter params);
-    
-    List<Ciudad> findAllActivePorDepartamento(Departamento d );
+    List<Localidad> findAll(String query, QueryParameter params);
+
+    List<Localidad> findAllActivePorDepartamento(Departamento d);
 
     @Override
-    void remove(Ciudad entity, String usuario);
-    
-    
+    void remove(Localidad entity, String usuario);
 
 }

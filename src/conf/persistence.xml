@@ -5,6 +5,5 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
     </properties>
-    
   </persistence-unit>
 </persistence>
