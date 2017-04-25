@@ -3,7 +3,11 @@
     <welcome-file-list>
         <welcome-file>nuevo.xhtml</welcome-file>
     </welcome-file-list>
-    
+     <session-config>
+        <session-timeout>
+            240
+        </session-timeout>
+    </session-config>
     
     <context-param>
         <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
